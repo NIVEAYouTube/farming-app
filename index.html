@@ -6,13 +6,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Farming">
+<meta name="apple-mobile-web-app-title" content="FarmingCommunity">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json?v=2">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>Farming 農業コミュニティ｜アプリ試作</title>
+<title>FarmingCommunity｜農業コミュニティ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -248,6 +248,84 @@ body.nomotion *{transition:none!important;animation:none!important}
 .viewer.open{opacity:1;pointer-events:auto}
 .viewer img{max-width:100%;max-height:82%;object-fit:contain}
 .viewer .gbtn{position:absolute;top:calc(14px + var(--st));right:14px;color:#fff}
+.avprev{display:flex;justify-content:center;padding:10px 0 16px}
+.brand-h{font-size:30px!important;letter-spacing:-.01em}
+.brand-h span{color:var(--tint)}
+.av.pic{background:var(--fill);overflow:hidden}.av.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.av.emo{font-size:1.15em;background:color-mix(in srgb,var(--av) 22%,var(--cell))}
+.av.on{position:relative;overflow:visible}.av.on::after{content:"";position:absolute;right:-1px;bottom:-1px;width:28%;height:28%;min-width:9px;min-height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 2px var(--cell)}
+.av.pic.on img{border-radius:50%}
+.av.big{width:96px!important;height:96px!important;font-size:42px!important}
+.avbtn{position:relative;border-radius:50%}.avbtn .av{width:100px;height:100px;font-size:40px}
+.avbtn i{position:absolute;right:0;bottom:0;width:30px;height:30px;border-radius:50%;background:var(--tint);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 3px var(--bg)}
+.avbtn i svg{width:15px;height:15px}
+.avgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:12px}
+.avgrid button{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:24px;background:color-mix(in srgb,var(--av) 22%,var(--cell));color:var(--label);font-weight:600}
+.avgrid button:first-child{background:var(--av);color:#fff;font-size:18px}
+.avgrid button.on{box-shadow:0 0 0 2.5px var(--tint)}
+.mention{color:var(--tint);font-weight:600;cursor:pointer}
+.msg.me .mention{color:inherit;text-decoration:underline}
+.mbox{position:absolute;z-index:96;border-radius:22px;padding:6px 0;max-height:260px;overflow:auto;opacity:0;transform:translateY(8px) scale(.97);pointer-events:none;transition:opacity .18s,transform .25s cubic-bezier(.3,1.3,.4,1)}
+.mbox.open{opacity:1;transform:none;pointer-events:auto}
+.mbox.glass{--lg-fill:color-mix(in srgb,var(--cell) 86%,transparent)}
+.mbox button{display:flex;align-items:center;gap:10px;width:100%;padding:8px 14px;text-align:left;font-size:15.5px}
+.mbox button .av{width:32px;height:32px;font-size:13px}
+.mbox button small{display:block;font-size:12px;color:var(--label2)}
+.mbox button:active{background:var(--press)}
+.cthread{position:relative}
+.cthread+.cthread::before{content:"";position:absolute;top:0;right:0;left:56px;border-top:.5px solid var(--sep)}
+.c-item+.c-item::before{display:none}
+.c-act{margin-top:3px}.c-act button{font-size:12.5px;font-weight:600;color:var(--label2)}
+.cthread.has-rep>.c-item::after{content:"";position:absolute;left:28px;top:46px;bottom:-2px;width:2px;border-radius:1px;background:var(--sep)}
+.replies{padding-left:40px}
+.c-item.rep{padding-top:6px}
+.c-item.rep::before{content:"";position:absolute;display:block!important;left:-12px;top:-2px;width:22px;height:23px;border-left:2px solid var(--sep);border-bottom:2px solid var(--sep);border-bottom-left-radius:12px;border-top:0}
+.c-item.rep:not(:last-child)::after{content:"";position:absolute;left:-12px;top:20px;bottom:-4px;width:2px;background:var(--sep)}
+.c-item.rep.in{animation:repin .55s cubic-bezier(.3,1.3,.4,1)}
+@keyframes repin{0%{opacity:0;transform:translateX(-40px)}100%{opacity:1;transform:none}}
+.composer.cwrap{flex-direction:column;align-items:stretch;gap:6px}
+.replybar{display:none;align-items:center;justify-content:space-between;font-size:13px;color:var(--label2);padding:0 6px 0 12px}
+.replybar.on{display:flex}.replybar button{width:26px;height:26px;display:grid;place-items:center;color:var(--label2)}.replybar svg{width:12px;height:12px}
+.fab{position:absolute;right:18px;bottom:calc(max(8px, calc(var(--sbm) - 12px)) + 76px);width:58px;height:58px;border-radius:50%;display:none;place-items:center;z-index:52;color:#fff;--lg-fill:color-mix(in srgb,var(--tint) 88%,transparent);transition:transform .2s}
+.fab.show{display:grid}.fab svg{width:26px;height:26px}.fab:active{filter:brightness(.92)}
+.ptr{position:absolute;top:calc(var(--st) + 66px);left:50%;transform:translateX(-50%);width:28px;height:28px;color:var(--label2);opacity:0;z-index:5;pointer-events:none}
+.ptr svg{width:100%;height:100%}.ptr.spin svg{animation:ptrspin .8s steps(8) infinite}
+@keyframes ptrspin{to{transform:rotate(360deg)}}
+.tab-ind.drag{transition:none!important;transform:scale(1.12,1.08);background:color-mix(in srgb,var(--lg-ind) 70%,var(--glass-line, rgba(255,255,255,.5)))}
+.tab.hover{color:var(--tint)}
+#tabs{touch-action:pan-y}
+.acttabs{display:grid;grid-template-columns:repeat(3,1fr);margin:0 16px 8px;border-bottom:.5px solid var(--sep)}
+.acttabs button{padding:10px 0 9px;font-size:15px;font-weight:600;color:var(--label2);text-align:center;position:relative}
+.acttabs button small{font-size:12px;font-weight:500;margin-left:4px}
+.acttabs button.on{color:var(--label)}.acttabs button.on::after{content:"";position:absolute;left:30%;right:30%;bottom:-1px;height:3px;border-radius:2px;background:var(--tint)}
+.actlist{max-height:none}
+.act-row{display:flex;gap:10px;padding:12px 14px;width:100%;text-align:left;position:relative}
+.act-row+.act-row::before{content:"";position:absolute;top:0;left:56px;right:0;border-top:.5px solid var(--sep)}
+.act-row .av{width:36px;height:36px;font-size:14px}
+.act-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.act-top{display:flex;gap:6px;align-items:baseline;min-width:0}.act-top b{font-size:14.5px}.act-top small{font-size:12px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.act-text{font-size:14.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.act-reto{font-size:12.5px;color:var(--label2);display:flex;align-items:center;gap:4px}.act-reto svg{width:13px;height:13px;color:var(--red)}
+.act-meta{display:flex;align-items:center;gap:3px;font-size:12.5px;color:var(--label2)}.act-meta svg{width:14px;height:14px}
+.act-thumb{width:64px;height:64px;border-radius:12px;overflow:hidden;flex:none}.act-thumb img,.act-thumb svg{width:100%;height:100%;object-fit:cover}
+.act-empty{padding:22px 16px;text-align:center;font-size:14px;color:var(--label2)}
+.ico.round{border-radius:50%;width:36px;height:36px}.ico.round svg{width:18px;height:18px}
+.nrow .grow{font-size:15px;line-height:1.4}.nrow.nnew{background:color-mix(in srgb,var(--tint) 6%,transparent)}
+.ndot{width:9px;height:9px;border-radius:50%;background:var(--tint);flex:none}
+.empty svg{width:40px;height:40px;margin:0 auto 10px;color:var(--label3)}.empty small{font-size:13px;display:block;margin-top:6px}
+.rst{display:block;font-size:10.5px;color:var(--label2);margin-top:1px}.rst.on{color:var(--green)}
+.call{position:absolute;inset:0;z-index:98;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:calc(90px + var(--st)) 24px calc(70px + var(--sbm));color:#fff;background:radial-gradient(120% 80% at 50% 20%,#2f6f6c,#0d1c1c 70%);opacity:0;pointer-events:none;transition:opacity .3s}
+.call.open{opacity:1;pointer-events:auto}
+.call-top{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.call-top b{font-size:30px;font-weight:600}.call-top span{font-size:16px;opacity:.8;font-variant-numeric:tabular-nums}
+.call-av{width:110px!important;height:110px!important;font-size:44px!important;box-shadow:0 0 0 8px rgba(255,255,255,.08)}
+.call-btns{display:flex;gap:60px}
+.cbtn{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;color:#fff;position:relative}
+.cbtn svg{width:30px;height:30px}.cbtn small{position:absolute;top:80px;font-size:13px;white-space:nowrap}
+.cbtn.red{background:#ff3b30}.cbtn.red svg{transform:rotate(135deg)}.cbtn.green{background:#34c759}
+.cbtn.glass{--lg-fill:rgba(255,255,255,.18)}.cbtn.on{background:#fff;color:#000}
+.callb{width:50px;height:50px;flex:none;color:var(--tint)}
+.callb svg{width:22px;height:22px}
 .search{margin:0 16px 14px;display:flex;align-items:center;gap:6px;background:var(--fill);border-radius:20px;padding:0 12px;height:40px;color:var(--label2)}
 .search svg{width:17px;height:17px;flex:none}
 .search input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:17px;color:var(--label)}
@@ -523,6 +601,8 @@ button.row:active,.crow:active{background:var(--press)}
       <div class="root" id="root">
         <header class="nav" id="nav"><span class="ttl" id="navTtl"></span><span class="nav-r" id="navBtn"></span></header>
         <main class="screen" id="screen"></main>
+        <button class="fab glass" id="fab" data-action="compose" aria-label="新規投稿"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        <div class="ptr" id="ptr"><svg viewBox="0 0 24 24"><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.25" transform="rotate(0 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.36" transform="rotate(45 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.46" transform="rotate(90 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.57" transform="rotate(135 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.68" transform="rotate(180 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.79" transform="rotate(225 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="0.89" transform="rotate(270 12 12)"/><rect x="11" y="2" width="2" height="6" rx="1" fill="currentColor" opacity="1.00" transform="rotate(315 12 12)"/></svg></div>
         <nav class="tabs glass" id="tabs"><span class="tab-ind" id="tabInd"></span><div class="tab-row" id="tabRow"></div></nav>
       </div>
     </div>
@@ -531,13 +611,18 @@ button.row:active,.crow:active{background:var(--press)}
     <div class="sheet-wrap" id="prefSheet" data-action="close-sheet-bg"><div class="sheet" id="prefSheetBody"></div></div>
     <div class="sheet-wrap" id="formSheet" data-action="close-sheet-bg"><div class="sheet" id="formSheetBody"></div></div>
     <div class="viewer" id="viewer" data-action="viewer-close"><img id="viewerImg" alt="写真"><button class="gbtn glass" data-action="viewer-close" aria-label="閉じる"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></button></div>
+    <div class="mbox glass" id="mbox"></div>
+    <div class="call" id="call"></div><audio id="callAudio" autoplay playsinline></audio>
     <div class="ctx" id="ctx"><div class="ctx-bg" data-action="ctx-close"></div><div class="ctx-card" id="ctxCard"></div><div class="ctx-menu glass" id="ctxMenu"></div></div>
     <div class="alert-wrap" id="alertWrap"><div class="alert glass" id="alertBox" role="alertdialog"></div></div>
-    <div class="banner glass" id="banner" data-action="banner-go"><span class="appicon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 30V14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M32 21C24 21 18 15 17 7c9 0 14 5 15 14z" fill="#b6f0a0"/><path d="M32 19c8 0 14-6 15-14-9 0-14 5-15 14z" fill="#b6f0a0"/><path d="M8 42c8-4 15-4 22-1h11c3 0 3 5 0 5H30M8 54c14 1 24 1 35-6l14-10c3-2 1-6-3-5L41 41" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="bt"><b>Farming</b><span id="bannerText"></span></div><time>今</time></div>
+    <div class="banner glass" id="banner" data-action="banner-go"><span class="appicon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 30V14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M32 21C24 21 18 15 17 7c9 0 14 5 15 14z" fill="#b6f0a0"/><path d="M32 19c8 0 14-6 15-14-9 0-14 5-15 14z" fill="#b6f0a0"/><path d="M8 42c8-4 15-4 22-1h11c3 0 3 5 0 5H30M8 54c14 1 24 1 35-6l14-10c3-2 1-6-3-5L41 41" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="bt"><b>FarmingCommunity</b><span id="bannerText"></span></div><time>今</time></div>
   </div>
 </div>
 <script>
 window.SY={on:false};
+function findUserByName(n){ if(n===ME.name) return "me"; return Object.keys(typeof USERS!=="undefined"?USERS:{}).find(k=>USERS[k].name===n)||null; }
+function rich(t){ return esc(t||"").replace(/@([^\s@<>&"]{1,16})/g,(m,n)=>{ const u=findUserByName(n); return `<span class="mention" ${u?`data-action="user" data-u="${u}"`:""}>@${n}</span>`; }); }
+const toC=(c,i)=>Array.isArray(c)?{who:c[0],ini:c[1],color:c[2],text:c[3],id:"s"+i}:{...c,id:c.id||("s"+i)};
 const isPhoto=p=>!!p.img||(p.art||"")[0]==="p";
 const artOf=p=>p.img?`<img src="${p.img}" alt="" decoding="async">`:art(p.art||"basket");
 let composeImg=null;
@@ -585,6 +670,9 @@ trash:`<svg viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V4.8c0-.7.5-1.3 1.3-
 eyeoff:`<svg viewBox="0 0 24 24"><path d="M3 12s3.3-6 9-6c1.6 0 3 .5 4.2 1.1M21 12s-3.3 6-9 6c-1.6 0-3-.5-4.2-1.1M9.9 9.9a3 3 0 0 0 4.2 4.2M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
 more:`<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="18" cy="12" r="1.7" fill="currentColor"/></svg>`,
 photo:`<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4.5 3.5 3 3-2.5L20 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+bell2:`<svg viewBox="0 0 24 24"><path d="M12 3.5a5.5 5.5 0 0 0-5.5 5.5v3.6L5 15.5h14l-1.5-2.9V9A5.5 5.5 0 0 0 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.8 18.5a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+mic:`<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+phone:`<svg viewBox="0 0 24 24"><path d="M6.6 3.5l2.6.4 1.3 3.8-1.9 1.5a11.5 11.5 0 0 0 6.2 6.2l1.5-1.9 3.8 1.3.4 2.6c.1.9-.6 1.7-1.5 1.8C10.8 19.6 4.4 13.2 4.8 5c.1-.9.9-1.6 1.8-1.5z" fill="currentColor"/></svg>`,
 compose:`<svg viewBox="0 0 24 24"><path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M18.4 3.6a1.9 1.9 0 0 1 2.7 2.7L12.5 15l-3.6.9.9-3.6z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>`,
 search:`<svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`,
 pin:`<svg viewBox="0 0 16 16"><path d="M8 15s5-4.6 5-8.5A5 5 0 0 0 3 6.5C3 10.4 8 15 8 15z" fill="currentColor"/></svg>`,
@@ -663,7 +751,7 @@ const REPLIES={
 
 
 const CAT_IOS={"イベント":"var(--orange)","企業コラボ":"var(--purple)","募集":"var(--tint)","おすそわけ":"var(--green)"};
-const TITLES={home:"Farming",board:"掲示板",chat:"チャット",me:"マイページ"};
+const TITLES={home:"FarmingCommunity",board:"掲示板",chat:"チャット",me:"マイページ"};
 const AV_COLORS=["#f07a1c","#e2452e","#2bb5b0","#6c5bb8","#3b8fd6","#4c8a34"];
 
 /* ---------- 設定（リセットしても残す） ---------- */
@@ -702,10 +790,10 @@ let S, posts, board, rooms, nextId, composeArt, pages=[];
 let R; // 予約・農園の状態
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const av=(ini,color)=>`<span class="av" style="--av:${color}">${esc(ini)}</span>`;
+const av=(ini,color,pic,on)=>{ const oc=on?" on":""; if(pic&&String(pic).startsWith("data:")) return `<span class="av pic${oc}" style="--av:${color}"><img src="${pic}" alt=""></span>`; if(pic) return `<span class="av emo${oc}" style="--av:${color}">${esc(pic)}</span>`; return `<span class="av${oc}" style="--av:${color}">${esc(ini)}</span>`; };
 const nowTime=()=>{const d=new Date();return d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")};
 
-function reset(){
+function reset(keepSheets){
   S={scope:SET.homeDefault,tab:"home",filter:"すべて",room:null,openPost:null,q:{board:"",chat:""},faq:{},cal:{view:"list",y:2026,m:10,sel:15}};
   posts=SEED_POSTS(); board=SEED_BOARD(); rooms=SEED_ROOMS(); nextId=100; composeArt="tomato";
   R={resTab:0, day:2, time:0, tools:[
@@ -716,17 +804,71 @@ function reset(){
   const MIDS={all:["tanaka","sato","kimura"],water:["tanaka","sato"],koumuten:["inoue","yamamoto"],staff:["tanaka"]};
   rooms.forEach(r=>{ r.mids=MIDS[r.id]||[]; if(r.id==="staff") r.dm="tanaka"; });
   S.idq=""; S.idres=undefined;
-  ME.name="はしもと ゆい"; ME.ini="ゆ"; ME.color="#f07a1c";
-  closeSheets(); closeAlert(); pages.forEach(p=>p.el.remove()); pages=[]; $("#root").classList.remove("under");
+  ME.name="はしもと ゆい"; ME.ini="ゆ"; ME.color="#f07a1c"; try{ ME.pic=localStorage.getItem("farming-pic")||null; }catch(e){ ME.pic=null; }
+  if(!keepSheets){ closeSheets(); closeAlert(); } pages.forEach(p=>p.el.remove()); pages=[]; $("#root").classList.remove("under");
   posts.forEach(p=>{p.base=p.likes;p.seedC=p.comments.slice();}); board.forEach(b=>b.base=b.n); rooms.forEach(r=>r.seedMsgs=r.msgs.slice());
+  R.delLocal=[];
+  S.notifs=[{id:"seed1",text:"梅田ガーデン 全体｜きむら：収穫祭のチラシ、できたので掲示板に貼りました📄",target:{room:"all"},ts:Date.now()-50*60e3,read:false},
+    {id:"seed2",text:"おかださんからフレンド申請が届きました",target:{page:"friends"},ts:Date.now()-3*3600e3,read:false},
+    {id:"seed3",text:"たなかさんが「収穫祭＆マルシェ 11/23（日）」への参加を呼びかけています",target:{board:1},ts:Date.now()-26*3600e3,read:true}];
+  if(!noRestore){ const st=loadSaved(); if(st){ try{ restoreState(st); }catch(e){ console.warn("restore failed",e); } } }
+  noRestore=false; lastSaved="";
   render(); $("#screen").scrollTop=0; onScroll();
   if(SY.afterReset) SY.afterReset();
 }
 
+/* ---------- 端末への保存（更新しても消えないように） ---------- */
+const STATE_KEY="farming-state-v1";
+let lastSaved="", noRestore=false;
+function snapshotState(){
+  const synced=id=>SY.on&&SY.isSynced&&SY.isSynced(id);
+  const real=k=>String(k).startsWith("r_");
+  const Rs={...R, friends:R.friends.filter(k=>!real(k)), requests:R.requests.filter(k=>!real(k)), sent:R.sent.filter(k=>!real(k)), selPlot:-1};
+  return { v:1, ts:Date.now(), R:Rs,
+    rooms:rooms.filter(r=>!synced(r.id)).map(r=>{ const {seedMsgs,...o}=r; return o; }),
+    roomOrder:rooms.map(r=>r.id),
+    unread:Object.fromEntries(rooms.map(r=>[r.id,r.unread||0])),
+    myPosts:SY.on?[]:posts.filter(p=>typeof p.id==="number"&&p.own),
+    edits:SY.on?{}:Object.fromEntries(posts.filter(p=>typeof p.id==="number"&&p.edited&&!p.own).map(p=>[p.id,{text:p.text,art:p.art,img:p.img||null}])),
+    joined:SY.on?[]:board.filter(b=>b.joined).map(b=>b.id),
+    nextId, cal:S.cal, hidden:[...(S.hidden||[])], notifs:(S.notifs||[]).slice(0,120),
+    SET:{notif:SET.notif,n:SET.n,remind:SET.remind,homeDefault:SET.homeDefault,motion:SET.motion,visibility:SET.visibility,showPlot:SET.showPlot,showHarvest:SET.showHarvest,read:SET.read} };
+}
+function saveState(force){
+  if(!R||!rooms) return;
+  try{ const st=snapshotState(); const j=JSON.stringify({...st,ts:0}); if(!force&&j===lastSaved) return; lastSaved=j;
+    localStorage.setItem(STATE_KEY,JSON.stringify(st)); if(SY.saveState) SY.saveState(st); }catch(e){ console.warn("save failed",e); }
+}
+function restoreState(st){
+  if(!st||st.v!==1) return;
+  const real=k=>String(k).startsWith("r_");
+  if(st.R){ const keepReal={friends:R.friends.filter(real),requests:R.requests.filter(real),sent:R.sent.filter(real)};
+    R={...R,...st.R}; R.friends=[...st.R.friends||[],...keepReal.friends]; R.requests=[...st.R.requests||[],...keepReal.requests]; R.sent=[...st.R.sent||[],...keepReal.sent]; }
+  (st.rooms||[]).forEach(sr=>{ const i=rooms.findIndex(r=>r.id===sr.id); const seed=i>=0?rooms[i].seedMsgs:sr.msgs.slice(0,1); const nr={...sr,seedMsgs:seed}; if(i>=0) rooms[i]=nr; else rooms.push(nr); });
+  if(st.roomOrder){ const ord=st.roomOrder; rooms.sort((a,b)=>{ const ia=ord.indexOf(a.id), ib=ord.indexOf(b.id); return (ia<0?-1:ia)-(ib<0?-1:ib); }); }
+  if(st.unread) rooms.forEach(r=>{ if(st.unread[r.id]!=null) r.unread=st.unread[r.id]; });
+  if(st.myPosts&&st.myPosts.length) posts=[...st.myPosts.map(p=>({...p,isNew:false,base:p.base||0,seedC:p.seedC||[]})),...posts];
+  if(st.edits) posts.forEach(p=>{ const e=st.edits[p.id]; if(e) Object.assign(p,e,{edited:true}); });
+  if(R.delLocal) posts=posts.filter(p=>!R.delLocal.includes(p.id));
+  (st.joined||[]).forEach(id=>{ const b=board.find(x=>x.id===id); if(b&&!b.joined){ b.joined=true; b.n=b.base+1; } });
+  if(st.nextId) nextId=Math.max(nextId,st.nextId);
+  if(st.cal) S.cal=st.cal;
+  if(st.hidden) S.hidden=new Set(st.hidden);
+  if(st.notifs) S.notifs=st.notifs;
+  if(st.SET) Object.assign(SET,st.SET);
+}
+function loadSaved(){ try{ return JSON.parse(localStorage.getItem(STATE_KEY)||"null"); }catch(e){ return null; } }
+function clearSaved(){ try{ localStorage.removeItem(STATE_KEY); }catch(e){} lastSaved=""; }
+setInterval(()=>saveState(false),2500);
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") saveState(true); });
+addEventListener("pagehide",()=>saveState(true));
+
 /* ---------- ルート画面 ---------- */
 function render(){
   $("#navTtl").textContent=TITLES[S.tab];
-  $("#navBtn").innerHTML = S.tab==="home" ? `<button class="gbtn glass" data-action="compose" aria-label="新規投稿">${IC.compose}</button>` : S.tab==="chat" ? `<span class="gcap glass"><button data-action="push" data-page="friends" aria-label="フレンド">${IC.people}${R.requests.length?`<i class="cdot">${R.requests.length}</i>`:""}</button><button data-action="new-group" aria-label="新しいグループ">${IC.compose}</button></span>` : "";
+  $("#fab").classList.toggle("show",S.tab==="home");
+  const nUn=(S.notifs||[]).filter(n=>!n.read).length;
+  $("#navBtn").innerHTML = S.tab==="home" ? `<button class="gbtn glass" data-action="push" data-page="notifs" aria-label="通知">${IC.bell2}${nUn?`<i class="cdot">${nUn>99?"99+":nUn}</i>`:""}</button>` : S.tab==="chat" ? `<span class="gcap glass"><button data-action="push" data-page="friends" aria-label="フレンド">${IC.people}${R.requests.length?`<i class="cdot">${R.requests.length}</i>`:""}</button><button data-action="new-group" aria-label="新しいグループ">${IC.compose}</button></span>` : "";
   const unread=rooms.reduce((a,r)=>a+r.unread,0);
   const tabs=[["home","ホーム"],["board","掲示板"],["chat","チャット"],["me","マイページ"]];
   const ti=tabs.findIndex(t=>t[0]===S.tab), ind=$("#tabInd"); if(ind.dataset.i!==String(ti)){ if(ind.dataset.i!==undefined){ind.classList.remove("bump");void ind.offsetWidth;ind.classList.add("bump");} ind.dataset.i=ti; ind.style.setProperty("--i",ti); }
@@ -737,10 +879,10 @@ function render(){
 function postCard(p){
   const g=G[p.g];
   return `<article class="post ${p.isNew?"new":""}" data-action="open-post" data-id="${p.id}" tabindex="0">
-    <div class="p-head" ${postUser(p)?`data-action="user" data-u="${postUser(p)}"`:""}>${av(p.ini,p.color)}<div class="txt"><span class="p-name">${esc(g.name)}</span><span class="p-sub">${esc(p.who)}・${esc(p.time)}${p.edited?"・編集済み":""}</span></div></div>
+    <div class="p-head" ${postUser(p)?`data-action="user" data-u="${postUser(p)}"`:""}>${av(p.ini,p.color,p.pic)}<div class="txt"><span class="p-name">${esc(p.place||g.name)}</span><span class="p-sub">${esc(p.who)}・${esc(p.time)}${p.edited?"・編集済み":""}</span></div></div>
     <div class="art ${isPhoto(p)?"photo":""}">${artOf(p)}</div>
     <div class="p-meta"><button class="like ${p.liked?"on":""}" data-action="like" data-id="${p.id}" aria-label="いいね">${p.liked?IC.heart:IC.heartO}<span>${p.likes}</span></button><span class="cm">${IC.bubble}${p.comments.length}</span></div>
-    <p class="p-text">${esc(p.text)}</p></article>`;
+    <p class="p-text">${rich(p.text)}</p></article>`;
 }
 function scopeList(){ return posts.filter(p=>!(S.hidden&&S.hidden.has(String(p.id)))&&(S.scope==="kansai"||(S.scope==="mine"?p.scope==="mine":G[p.g].pref===S.scope))); }
 function feedHTML(){
@@ -756,7 +898,7 @@ function homeSub(){
 function homeHTML(){
   if(!["mine","kansai",...SET.prefs].includes(S.scope)) S.scope="kansai";
   const opts=[["mine","マイ農園"],["kansai","関西全域"],...SET.prefs.map(x=>[x,x])];
-  return `<div class="lt"><span class="ai">${LOGO}</span><h1>Farming</h1></div>
+  return `<div class="lt"><span class="ai">${LOGO}</span><h1 class="brand-h">Farming<span>Community</span></h1></div>
   <p class="lt-sub" id="homeSub">${esc(homeSub())}</p>
   <div class="scopebar">
     <div class="scroller" id="scroller"><div class="track"><span class="sc-ind" id="scInd"></span>${opts.map(([v,l])=>`<button class="sc-btn ${S.scope===v?"on":""}" data-action="scope" data-scope="${v}">${l}</button>`).join("")}</div></div>
@@ -820,7 +962,7 @@ function chatList(){
   const list=rooms.filter(r=>!q||(r.name+r.msgs.map(m=>m.text).join("")).includes(q));
   if(!list.length) return `<div class="empty">「${esc(q)}」に一致するトークはありません</div>`;
   return `<div class="chatlist">${list.map(r=>{const last=r.msgs[r.msgs.length-1];return `<button class="crow" data-action="open-room" data-id="${r.id}">
-    <span class="unread ${r.unread?"on":""}"></span>${av(r.ini,r.color)}
+    <span class="unread ${r.unread?"on":""}"></span>${r.dm&&USERS[r.dm]?uav(r.dm):av(r.ini,r.color)}
     <div class="c-main"><div class="c-top"><b>${esc(r.name)}</b><time>${esc(last?last.time:"")}</time>${IC.chev}</div><span class="c-prev">${esc(last?(()=>{ const tx=last.img&&!last.text?"📷 写真":last.text; return last.me?"あなた: "+tx:last.sys?tx:(r.dm?"":last.who+": ")+tx; })():"")}</span></div></button>`}).join("")}</div>`;
 }
 function chatHTML(){ return `<div class="lt"><h1>チャット</h1></div>${searchHTML("chat","トークを検索")}
@@ -869,6 +1011,20 @@ function calHTML(){
   <div class="cal-day">${m}月${sel}日（${wd(m,sel,y)}）</div>
   ${list||`<div class="row"><span class="grow" style="color:var(--label2)">予定はありません</span><button class="pill" data-action="event-add">予定を追加</button></div>`}`;
 }
+function activityHTML(){
+  const a=S.act||"posts";
+  const mineC=c=>c&&(c.mine||(SY.uid&&c.uid===SY.uid));
+  const own=posts.filter(isOwn), liked=posts.filter(p=>p.liked);
+  const reps=[]; posts.forEach(p=>(p.comments||[]).forEach((c,i)=>{ if(mineC(c)) reps.push({p,c:toC(c,i)}); }));
+  const row=(p,extra)=>`<button class="act-row" data-action="open-post" data-id="${p.id}">${av(p.ini,p.color,p.pic)}<span class="act-main"><span class="act-top"><b>${esc(p.who)}</b><small>${esc(p.place||G[p.g].name)}・${esc(p.time||"")}</small></span>${extra||""}<span class="act-text">${rich(p.text)}</span><span class="act-meta">${p.liked?IC.heart:IC.heartO}${p.likes}　${IC.bubble}${p.comments.length}</span></span>${isPhoto(p)?`<span class="act-thumb">${artOf(p)}</span>`:""}</button>`;
+  let body="";
+  if(a==="posts") body=own.map(p=>row(p)).join("")||`<div class="act-empty">まだ投稿がありません。右下の＋から投稿してみましょう</div>`;
+  if(a==="reps") body=reps.slice().reverse().map(({p,c})=>`<button class="act-row" data-action="open-post" data-id="${p.id}">${av(ME.ini,ME.color,ME.pic)}<span class="act-main"><span class="act-top"><b>${esc(ME.name)}</b><small>${c.ts?agoTs(c.ts):""}</small></span><span class="act-reto">↪ <b>${esc(p.who)}</b> さんの投稿への返信</span><span class="act-text">${rich(c.text)}</span></span></button>`).join("")||`<div class="act-empty">まだコメント・返信がありません</div>`;
+  if(a==="likes") body=liked.map(p=>row(p,`<span class="act-reto">${IC.heart} いいねした投稿</span>`)).join("")||`<div class="act-empty">いいねした投稿がここに表示されます</div>`;
+  return `<div class="sec-h">アクティビティ</div>
+  <div class="acttabs">${[["posts","投稿",own.length],["reps","返信",reps.length],["likes","いいね",liked.length]].map(([k,l,n])=>`<button class="${a===k?"on":""}" data-action="act" data-v="${k}">${l}<small>${n}</small></button>`).join("")}</div>
+  <div class="group actlist">${body}</div>`;
+}
 function meHTML(){
   const months=[5,6,7,8,9,10];
   const vals=months.map(mo=>R.harvest.filter(h=>h.m===mo).reduce((a,h)=>a+h.kg,0));
@@ -880,7 +1036,8 @@ function meHTML(){
   const myPosts=posts.filter(p=>p.who===ME.name).length, joined=board.filter(b=>b.joined);
   const upcoming=allEvents().filter(e=>e.m>TODAY.m||(e.m===TODAY.m&&e.d>=TODAY.d)).slice(0,6);
   return `<div class="lt"><h1>マイページ</h1></div>
-  <div class="group"><button class="row profile" data-action="push" data-page="profile">${av(ME.ini,ME.color)}<span class="grow"><b>${esc(ME.name)}</b><small>${esc(mainGardenName())}${SET.showPlot?"・区画 B-03":""}<br>拠点：${esc(SET.base.pref)} ${esc(SET.base.city)}</small></span>${IC.chev}</button></div>
+  <div class="group"><button class="row profile" data-action="push" data-page="profile">${av(ME.ini,ME.color,ME.pic)}<span class="grow"><b>${esc(ME.name)}</b><small>${esc(mainGardenName())}${SET.showPlot?"・区画 B-03":""}<br>拠点：${esc(SET.base.pref)} ${esc(SET.base.city)}</small></span>${IC.chev}</button></div>
+  ${activityHTML()}
   ${SET.showHarvest?`<div class="sec-hx"><span>今年の記録</span><button data-action="harvest-add">＋ 収穫を記録</button></div>
   <div class="group"><div class="stats">
     <div class="stat"><b>${kgf(total)}<small>kg</small></b><span class="s-l">収穫量</span></div>
@@ -899,7 +1056,8 @@ function meHTML(){
   ${SY.on&&SY.html?SY.html():""}
   <div class="sec-h">設定</div>
   <div class="group">
-    ${setRow(IC.bell,"var(--red)","通知","notif",SET.notif?"オン":"オフ")}
+    ${setRow(IC.bell,"var(--red)","通知センター","notifs",(S.notifs||[]).filter(n=>!n.read).length||"")}
+    ${setRow(IC.bell,"var(--orange)","通知の設定","notif",SET.notif?"オン":"オフ")}
     ${setRow(IC.cal,"var(--orange)","区画・道具の予約","reserve")}
     ${setRow(IC.leaf,"var(--green)","参加している農園","gardens",Object.keys(R.gardens).length)}
   </div>
@@ -909,7 +1067,7 @@ function meHTML(){
     ${setRow(IC.help,"var(--gray)","ヘルプとお問い合わせ","help")}
   </div>
   <div class="group" style="margin-top:18px"><button class="row danger" data-action="logout">ログアウト</button></div>
-  <p class="ver">Farming ver.1.5（10/23版・コンペ提案用プロトタイプ）</p>`;
+  <p class="ver">FarmingCommunity ver.2.0（10/23版・コンペ提案用プロトタイプ）</p>`;
 }
 /* ---------- 収穫・予定の入力シート ---------- */
 let F={}, E={};
@@ -978,7 +1136,7 @@ const MUTUAL={okada:2,matsuo:1,morita:1,fujii:0,nishida:3,ueda:1,ishida:0,nakamu
 const GENERIC=["いいですね！","よろしくお願いします🙌","了解です！","今度畑で会いましょう","ありがとうございます！","楽しみにしてます🌱"];
 const GROUP_EMOJI=["🌱","🍅","🥕","🌻","🪵","🍠","🐝","🧺"];
 const uidByName=n=>Object.keys(USERS).find(k=>USERS[k].name===n);
-const uav=u=>av(USERS[u].ini,USERS[u].color);
+const uav=u=>{ const x=USERS[u]; return av(x.ini,x.color,x.pic,!!(x.real&&x.online)); };
 function postUser(p){ if(isOwn(p)) return "me"; if(p.uid&&SY.ensureUser) return SY.ensureUser(p.uid,{name:p.who,color:p.color}); return uidByName(p.who)||null; }
 function relation(u){ return R.friends.includes(u)?"friend":R.requests.includes(u)?"incoming":R.sent.includes(u)?"sent":"none"; }
 function suggestions(){
@@ -991,7 +1149,7 @@ function friendList(){
   const list=R.friends.filter(u=>!q||(USERS[u].name+USERS[u].h+G[USERS[u].g].name).includes(q));
   if(!R.friends.length) return `<div class="group"><div class="row"><span class="grow" style="color:var(--label2)">まだフレンドがいません</span></div></div>`;
   if(!list.length) return `<div class="empty">「${esc(q)}」に一致するフレンドはいません</div>`;
-  return `<div class="group">${list.map(u=>friendRow(u,`<button class="gbtn glass sm" data-action="dm" data-u="${u}" aria-label="メッセージ">${IC.tab.chat[0]}</button>`)).join("")}</div>`;
+  return `<div class="group">${list.map(u=>S.fEdit?friendRow(u,`<button class="pill" style="background:var(--red);color:#fff" data-action="friend-menu" data-u="${u}">削除</button>`):friendRow(u,`<button class="gbtn glass sm" data-action="dm" data-u="${u}" aria-label="メッセージ">${IC.tab.chat[0]}</button>`)).join("")}</div>`;
 }
 function qrSVG(seed){
   let x=seed, rnd=()=>{x=(x*9301+49297)%233280;return x/233280}; const N=25; let r="";
@@ -1031,7 +1189,7 @@ const PAGES={
   <label class="search" style="margin-top:4px">${IC.search}<input data-search="friends" value="${esc(S.q.friends||"")}" placeholder="フレンドを検索"></label>
   ${R.requests.length?`<div class="sec-h" style="margin-top:4px">フレンド申請（${R.requests.length}件）</div>
   <div class="group">${R.requests.map(u=>friendRow(u,`<button class="pill" data-action="accept" data-u="${u}">承認</button><button class="mv x2" data-action="decline" data-u="${u}" aria-label="削除">${IC.x}</button>`)).join("")}</div>`:""}
-  <div class="sec-h">フレンド（${R.friends.length}人）</div>
+  <div class="sec-hx"><span>フレンド（${R.friends.length}人）</span>${R.friends.length?`<button data-action="f-edit">${S.fEdit?"完了":"編集"}</button>`:""}</div>
   <div id="friendBox">${friendList()}</div>
   ${suggestions().length?`<div class="sec-h">知り合いかも</div>
   <div class="group">${suggestions().map(u=>{const x=USERS[u],main=Object.keys(R.gardens).find(k=>R.gardens[k]==="main");return `<div class="row" style="--inset:62px"><button class="frow" data-action="user" data-u="${u}">${uav(u)}<span class="grow">${esc(x.name)}<small>${x.g===main?"同じ農園のメンバー":MUTUAL[u]?"共通のフレンド "+MUTUAL[u]+"人":esc(G[x.g].name)}</small></span></button><button class="pill" data-action="request" data-u="${u}">追加</button></div>`}).join("")}</div>`:""}
@@ -1046,12 +1204,12 @@ const PAGES={
  user:{title:"プロフィール",body:()=>{
   const u=S.viewUser, x=USERS[u], rel=relation(u), ps=posts.filter(p=>x.uid?p.uid===x.uid:p.who===x.name);
   const groups=rooms.filter(r=>!r.dm&&r.mids&&r.mids.includes(u));
-  const btns={friend:`<button class="wide-btn half" data-action="dm" data-u="${u}">メッセージ</button><button class="wide-btn half sub" disabled>フレンド ✓</button>`,
+  const btns={friend:`<button class="wide-btn half" data-action="dm" data-u="${u}">メッセージ</button><button class="wide-btn half sub" data-action="friend-menu" data-u="${u}">フレンド ✓</button>`,
     incoming:`<button class="wide-btn half" data-action="accept" data-u="${u}">申請を承認</button><button class="wide-btn half sub" data-action="decline" data-u="${u}">削除</button>`,
     sent:`<button class="wide-btn half" disabled>申請中</button><button class="wide-btn half sub" data-action="dm" data-u="${u}">メッセージ</button>`,
     none:`<button class="wide-btn half" data-action="request" data-u="${u}">フレンド申請</button><button class="wide-btn half sub" data-action="dm" data-u="${u}">メッセージ</button>`}[rel];
   return `<div class="bigav">${uav(u)}<b class="u-name">${esc(x.name)}</b><span class="u-id">@${x.h}</span><p class="u-bio">${esc(x.bio||"")}</p>${x.pref?`<span class="u-base">${IC.pin}${esc(x.pref)} ${esc(x.city||"")}</span>`:""}${x.real?`<span class="u-live">${x.online?"● オンライン":"発表メンバー"}</span>`:""}</div>
-  <div class="btnrow">${btns}</div>
+  <div class="btnrow">${btns}<button class="gbtn glass callb" data-action="call" data-u="${u}" aria-label="音声通話">${IC.phone}</button></div>
   <div class="sec-h">農園</div>
   <div class="group"><div class="row" style="--inset:58px"><span class="ico" style="--c:var(--green)">${IC.leaf}</span><span class="grow">${esc(G[x.g].name)}<small>${esc(G[x.g].area)}</small></span></div></div>
   ${groups.length?`<div class="sec-h">共通のグループ</div><div class="group">${groups.map(r=>`<button class="row" style="--inset:62px" data-action="open-room" data-id="${r.id}">${av(r.ini,r.color)}<span class="grow">${esc(r.name)}<small>${r.mids.length+1}人</small></span>${IC.chev}</button>`).join("")}</div>`:""}
@@ -1064,7 +1222,7 @@ const PAGES={
   <div class="sec-h">メンバー</div>
   <div class="group">
     ${own?`<button class="row" style="--inset:62px" data-action="add-members"><span class="pm add" style="width:40px;height:40px;margin:0"></span><span class="grow" style="color:var(--tint)">メンバーを追加</span></button>`:""}
-    <div class="row" style="--inset:62px">${av(ME.ini,ME.color)}<span class="grow">${esc(ME.name)}<small>あなた${own?"・作成者":""}</small></span></div>
+    <div class="row" style="--inset:62px">${av(ME.ini,ME.color,ME.pic)}<span class="grow">${esc(ME.name)}<small>あなた${own?"・作成者":""}</small></span></div>
     ${mids.map(u=>`<button class="row" style="--inset:62px" data-action="user" data-u="${u}">${uav(u)}<span class="grow">${esc(USERS[u].name)}<small>${esc(G[USERS[u].g].name)}</small></span>${relation(u)==="friend"?"":`<span class="val" style="font-size:13px">フレンドではありません</span>`}${IC.chev}</button>`).join("")}
     ${!own&&!r.dm&&r.members>mids.length+1?`<div class="row"><span class="grow" style="color:var(--label2)">ほか ${r.members-mids.length-1}人</span></div>`:""}
   </div>
@@ -1079,7 +1237,7 @@ const PAGES={
     <div class="group">${list.map(h=>`<button class="row" style="--inset:58px" data-action="hv-del" data-v="${h.id}"><span class="ico" style="--c:var(--fill)">${crop(h.crop)[1]}</span><span class="grow">${esc(h.crop)}<small>${m}月${h.d}日（${wd(m,h.d)}）${h.memo?"・"+esc(h.memo):""}</small></span><span class="val">${kgf(h.kg)}kg</span></button>`).join("")}</div>`}).join("")
    +`<p class="sec-f" style="margin-top:12px">記録をタップすると削除できます。</p>`}},
  profile:{title:"プロフィール",body:()=>`
-  <div class="bigav">${av(ME.ini,ME.color)}<button data-action="avcolor">写真を編集</button></div>
+  <div class="bigav"><button class="avbtn" data-action="avcolor">${av(ME.ini,ME.color,ME.pic)}<i>${IC.pencil}</i></button><button data-action="avcolor">アイコンを編集</button></div>
   <div class="sec-h">基本情報</div>
   <div class="group">
     <label class="row"><span class="lbl">名前</span><input class="inline" data-field="name" value="${esc(ME.name)}" maxlength="16"></label>
@@ -1097,6 +1255,11 @@ const PAGES={
     <div class="row"><span class="grow">利用開始</span><span class="val">2025年4月</span></div>
   </div>
   <p class="sec-f">名前・ひとこと・拠点は、ほかのメンバーのプロフィール画面に表示されます。</p>`},
+ notifs:{title:"通知",right:()=>`<button class="gbtn glass r" data-action="notif-all" aria-label="すべて既読">${IC.ok}</button>`,body:()=>{
+  const list=S.notifs||[]; if(!list.length) return `<div class="empty" style="padding-top:80px">${IC.bell}<br>まだ通知はありません<br><small>いいね・コメント・メッセージ・フレンド申請が届くと、ここにまとまります</small></div>`;
+  const day=24*3600e3, now=Date.now(); const grp=[["新着",list.filter(n=>!n.read)],["今日",list.filter(n=>n.read&&now-n.ts<day)],["以前",list.filter(n=>n.read&&now-n.ts>=day)]].filter(g=>g[1].length);
+  return grp.map(([h,l])=>`<div class="sec-h" style="margin-top:6px">${h}</div><div class="group">${l.map(n=>{ const [c,ic]=notifIcon(n.target||{}); return `<button class="row nrow ${n.read?"":"nnew"}" style="--inset:62px" data-action="notif-go" data-v="${n.id}"><span class="ico round" style="--c:${c}">${ic}</span><span class="grow">${esc(n.text)}<small>${agoTs(n.ts)}</small></span>${n.read?"":`<i class="ndot"></i>`}</button>`; }).join("")}</div>`).join("")
+   +`<p class="sec-f" style="margin-top:12px">通知をタップすると、その内容の画面に移動します。</p>`; }},
  basepref:{title:"都道府県",body:()=>`
   <div class="sec-h" style="margin-top:6px">関西広域連合</div>
   <div class="group">${KANSAI.map(x=>`<button class="row" data-action="base-pref" data-v="${x}"><span class="grow">${x}</span>${SET.base.pref===x?IC.check:""}</button>`).join("")}</div>
@@ -1198,37 +1361,68 @@ function refresh(){
   // 開いている全ページを最新状態に
   const ae=document.activeElement, typing=ae&&/^(INPUT|TEXTAREA)$/.test(ae.tagName);
   if(typing){ S.pendingRefresh=true; }
-  pages.forEach(p=>{ if(typing&&p.el.contains(ae)) return; if(p.key==="room"){ const r=rooms.find(x=>x.id===S.room); const w=p.el.querySelector(".r-who"); if(r&&w) w.innerHTML=`${av(r.ini,r.color)}<span class="nm glass">${esc(r.name)} ›</span>`; return; } const b=p.el.querySelector(".pg-body"); const st=b.scrollTop; b.innerHTML=PAGES[p.key].body(); b.scrollTop=st; });
+  pages.forEach(p=>{ if(typing&&p.el.contains(ae)) return; if(p.key==="room"){ const r=rooms.find(x=>x.id===S.room); const w=p.el.querySelector(".r-who"); if(r&&w) w.innerHTML=rwho(r); return; } const b=p.el.querySelector(".pg-body"); const st=b.scrollTop; b.innerHTML=PAGES[p.key].body(); b.scrollTop=st; });
   const sc=$("#screen"), st=sc.scrollTop; if(typing&&sc.contains(ae)){ render.navOnly&&render.navOnly(); } else { render(); sc.scrollTop=st; }
 }
 
 /* ---------- シート・アラート・バナー ---------- */
 function setSheeted(on){ $("#app").classList.toggle("sheeted",on); }
+function setReply(r){ S.replyTo=r; const bar=$("#replyBar"), inp=$("#cInput"); if(!bar) return;
+  if(r){ bar.innerHTML=`<span>↪ <b>${esc(r.who)}</b> さんに返信</span><button data-action="reply-cancel" aria-label="返信をやめる">${IC.x}</button>`; bar.classList.add("on"); if(inp){ if(!inp.value.startsWith("@"+r.who)) inp.value="@"+r.who+" "+inp.value; inp.placeholder="返信を追加"; inp.focus(); } }
+  else { bar.classList.remove("on"); bar.innerHTML=""; if(inp) inp.placeholder="コメントを追加"; } }
+const AV_TEMPL=["🌱","🍅","🥕","🌻","🍆","🥬","🌽","🍠","🐝","🐓","🧑‍🌾","👩‍🌾","🧺","🚜","🍀","🌾"];
+let AV={};
+function squareImage(file,cb){ const img=new Image(), url=URL.createObjectURL(file); img.onload=()=>{ const n=Math.min(img.width,img.height), c=document.createElement("canvas"); c.width=c.height=180; c.getContext("2d").drawImage(img,(img.width-n)/2,(img.height-n)/2,n,n,0,0,180,180); URL.revokeObjectURL(url); cb(c.toDataURL("image/jpeg",.82)); }; img.src=url; }
+function avBody(){ return `<div class="avprev">${av(ME.ini,AV.color,AV.pic).replace('class="av','class="av big')}</div>
+  <div class="sec-h" style="margin-top:2px">テンプレート</div>
+  <div class="group"><div class="avgrid"><button class="${!AV.pic?"on":""}" data-action="av-t" data-v="" style="--av:${AV.color}"><span>${esc(ME.ini)}</span></button>${AV_TEMPL.map(e=>`<button class="${AV.pic===e?"on":""}" data-action="av-t" data-v="${e}" style="--av:${AV.color}"><span>${e}</span></button>`).join("")}</div></div>
+  <div class="sec-h">背景の色</div>
+  <div class="group"><div class="emojis" style="padding:12px">${AV_COLORS.concat(["#e8a317","#3b5a8c"]).map(c=>`<button class="${c===AV.color?"on":""}" data-action="av-c" data-v="${c}" style="background:${c}" aria-label="色"></button>`).join("")}</div></div>
+  <div class="group" style="margin-top:18px"><label class="row" style="color:var(--tint)"><input type="file" accept="image/*" id="avFile" hidden><span class="ico" style="--c:var(--blue)">${IC.photo}</span><span class="grow">フォトライブラリから選ぶ</span>${IC.chev}</label></div>
+  <p class="sec-f">GIF画像を選ぶと、アイコンが動きます。</p>`; }
+function avRefresh(){ const b=$("#formBody"); if(b) b.innerHTML=avBody(); }
+function openAvatar(){ AV={pic:ME.pic||null,color:ME.color};
+  $("#formSheetBody").innerHTML=`<div class="grab"></div><div class="sh-nav"><button class="gbtn glass" data-action="close-sheet" aria-label="キャンセル">${IC.x}</button><b>アイコンを編集</b><button class="gbtn glass tinted r" data-action="av-save" aria-label="保存">${IC.ok}</button></div><div class="sh-body" id="formBody">${avBody()}</div>`;
+  $("#formSheet").classList.add("open"); setSheeted(true); }
+function renameMine(){ posts.forEach(p=>{ if(p.own){ p.who=ME.name; p.ini=ME.ini; p.color=ME.color; p.pic=ME.pic; } (p.comments||[]).forEach(c=>{ if(c&&c.mine){ c.who=ME.name; c.ini=ME.ini; c.color=ME.color; c.pic=ME.pic; } }); }); }
 function openPost(id){
+  S.replyTo=null;
   const p=posts.find(x=>x.id==id); if(!p) return; S.openPost=p.id; const g=G[p.g];
   $("#postSheetBody").innerHTML=`<div class="grab"></div>
   <div class="sh-nav"><button class="gbtn glass" data-action="close-sheet" aria-label="閉じる">${IC.x}</button><b>投稿</b><span></span></div>
   <div class="sh-body">
     <div class="d-card">
-      <div class="d-head" ${postUser(p)?`data-action="user" data-u="${postUser(p)}" style="cursor:pointer"`:""}>${av(p.ini,p.color)}<div class="txt"><b>${esc(g.name)}</b><small>${esc(p.who)}・${esc(g.area)}・${esc(p.time)}${p.edited?"・編集済み":""}</small></div><button class="gbtn glass sm dmore" data-action="post-more" data-id="${p.id}" aria-label="その他">${IC.more}</button></div>
-      <p class="d-text">${esc(p.text)}</p>
+      <div class="d-head" ${postUser(p)?`data-action="user" data-u="${postUser(p)}" style="cursor:pointer"`:""}>${av(p.ini,p.color,p.pic)}<div class="txt"><b>${esc(p.place||g.name)}</b><small>${esc(p.who)}・${esc(p.place?g.name:g.area)}・${esc(p.time)}${p.edited?"・編集済み":""}</small></div><button class="gbtn glass sm dmore" data-action="post-more" data-id="${p.id}" aria-label="その他">${IC.more}</button></div>
+      <p class="d-text">${rich(p.text)}</p>
       <div class="d-art ${isPhoto(p)?"photo":""}">${artOf(p)}</div>
       <div class="d-meta"><button class="like ${p.liked?"on":""}" data-action="like" data-id="${p.id}">${p.liked?IC.heart:IC.heartO}<span>${p.likes}</span></button><span class="cm">${IC.bubble}<span id="cCount">${p.comments.length}</span></span></div>
     </div>
     <div class="c-h">コメント</div>
-    <div class="c-list" id="cList">${p.comments.map(c=>cItem(c)).join("")||`<div class="c-empty" id="cEmpty">最初のコメントを書いてみましょう</div>`}</div>
+    <div class="c-list" id="cList">${commentsHTML(p)}</div>
   </div>
-  <div class="composer"><div class="field-wrap glass"><input id="cInput" placeholder="コメントを追加" autocomplete="off" enterkeyhint="send"><button class="send" data-action="send-comment" aria-label="コメントを送信">${IC.up}</button></div></div>`;
+  <div class="composer cwrap"><div class="replybar" id="replyBar"></div><div class="field-wrap glass"><input id="cInput" placeholder="コメントを追加" autocomplete="off" enterkeyhint="send"><button class="send" data-action="send-comment" aria-label="コメントを送信">${IC.up}</button></div></div>`;
   $("#postSheet").classList.add("open"); setSheeted(true);
 }
-function cItem(c,isNew){return `<div class="c-item ${isNew?"in":""}">${av(c[1],c[2])}<div class="txt"><b>${esc(c[0])}</b>${esc(c[3])}</div></div>`}
+function cItem(c,isNew,isRep){ return `<div class="c-item ${isRep?"rep":""} ${isNew?"in":""}" data-cid="${c.id}">${c.uid&&SY.ensureUser?`<span data-action="user" data-u="${SY.ensureUser(c.uid,{name:c.who,color:c.color})}">${av(c.ini,c.color,c.pic)}</span>`:av(c.ini,c.color,c.pic)}<div class="txt"><b>${esc(c.who)}</b>${rich(c.text)}<div class="c-act"><button data-action="reply" data-cid="${c.id}" data-who="${esc(c.who)}">返信</button></div></div></div>`; }
+function commentsHTML(p,newId){
+  const list=p.comments.map(toC); if(!list.length) return `<div class="c-empty" id="cEmpty">最初のコメントを書いてみましょう</div>`;
+  const byId=Object.fromEntries(list.map(c=>[c.id,c])); const rootOf=c=>{ let x=c, g=0; while(x.parent&&byId[x.parent]&&g++<20) x=byId[x.parent]; return x.id; };
+  const roots=list.filter(c=>!c.parent||!byId[c.parent]);
+  return roots.map(r=>{ const reps=list.filter(c=>c.id!==r.id&&c.parent&&byId[c.parent]&&rootOf(c)===r.id);
+    return `<div class="cthread ${reps.length?"has-rep":""}">${cItem(r,r.id===newId)}${reps.length?`<div class="replies">${reps.map(c=>cItem(c,c.id===newId,true)).join("")}</div>`:""}</div>`; }).join("");
+}
+function paintComments(p,newId,scroll){ const l=$("#cList"); if(!l) return; l.innerHTML=commentsHTML(p,newId); const cc=$("#cCount"); if(cc) cc.textContent=p.comments.length;
+  document.querySelectorAll(`.post[data-id="${p.id}"] .cm`).forEach(el=>el.innerHTML=IC.bubble+p.comments.length);
+  if(scroll){ const b=$("#postSheetBody .sh-body"); const el=newId&&l.querySelector(`[data-cid="${newId}"]`); if(b&&el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"center"}),30); else if(b) b.scrollTo({top:b.scrollHeight,behavior:"smooth"}); } }
 function openCompose(editP){
+  if(!editP) S.cLoc=S.scope&&S.scope!=="kansai"&&S.scope!=="mine"?S.scope:(S.cLoc||"mine");
   S.editId=editP?editP.id:null; composeArt=editP?(editP.art||"basket"):"tomato"; composeImg=editP?(editP.img||null):null;
   $("#composeSheetBody").innerHTML=`<div class="grab"></div>
   <div class="sh-nav"><button class="gbtn glass" data-action="close-sheet" aria-label="キャンセル">${IC.x}</button><b>${editP?"投稿を編集":"新規投稿"}</b><button class="gbtn glass tinted r" data-action="publish" aria-label="${editP?"保存":"投稿"}">${editP?IC.ok:IC.up}</button></div>
   <div class="sh-body">
-    <div class="cmp-head">${av(ME.ini,ME.color)}<div style="flex:1"><textarea class="field" id="postText" placeholder="今日の畑のようすは？">${editP?esc(editP.text):""}</textarea>
-      <span class="loc">${IC.pin}${esc(mainGardenName())}</span></div></div>
+    <div class="cmp-head">${av(ME.ini,ME.color,ME.pic)}<div style="flex:1"><textarea class="field" id="postText" placeholder="今日の畑のようすは？">${editP?esc(editP.text):""}</textarea>
+      </div></div>
+    ${editP?"":`<div class="sec-h" style="margin:0 4px 7px">投稿する場所</div><div class="chips cloc" style="padding:0 0 14px">${[["mine","マイ農園"],["kansai","関西全域"],...KANSAI.map(x=>[x,x])].map(([v,l])=>`<button class="chip ${S.cLoc===v?"on":""}" data-action="cloc" data-v="${v}">${v==="mine"?"📍 ":""}${l}</button>`).join("")}</div>`}
     <label class="upl"><input type="file" accept="image/*" id="upFile" hidden><span id="upPrev">${composeImg?`<img src="${composeImg}" alt="">`:"📷"}</span><b>写真を撮る・選ぶ</b><small>スマホのカメラやアルバムから</small></label>
     <div class="pick">${Object.keys(ART).map(k=>`<button data-action="pick-art" data-art="${k}" class="${k===composeArt&&!composeImg?"on":""}" aria-label="写真">${art(k)}</button>`).join("")}</div>
   </div>`;
@@ -1260,7 +1454,7 @@ function closeCtx(){ $("#ctx").classList.remove("open"); if(S.ctxSrc){ const el=
 function deletePost(id){
   const p=posts.find(x=>x.id==id); if(!p) return;
   if(S.openPost!=null&&S.openPost==id) closeSheets();
-  if(SY.on){ if(typeof p.id==="string") SY.del(p.id); else SY.delSeed(p.id); } else posts=posts.filter(x=>x!==p);
+  if(SY.on){ if(typeof p.id==="string") SY.del(p.id); else SY.delSeed(p.id); } else { posts=posts.filter(x=>x!==p); if(typeof p.id==="number"&&!p.own) (R.delLocal||(R.delLocal=[])).push(p.id); }
   refresh(); setTimeout(()=>banner("投稿を削除しました"),250);
 }
 function closeSheets(){ document.querySelectorAll(".sheet-wrap").forEach(s=>{s.classList.remove("open");s.firstElementChild.style.transform="";}); setSheeted(false); if(S) S.openPost=null; }
@@ -1271,7 +1465,23 @@ function iosAlert(title,msg,btns){
   $("#alertWrap").classList.add("open");
 }
 function closeAlert(){ $("#alertWrap").classList.remove("open"); }
-function banner(t,target){const el=$("#banner");$("#bannerText").textContent=t;S.bannerTarget=target||null;el.classList.toggle("tappable",!!target);el.classList.add("show");clearTimeout(banner.t);banner.t=setTimeout(()=>el.classList.remove("show"),target?4000:2200)}
+function banner(t,target,opt){ if(target&&!(opt&&opt.nolog)){ S.notifs=S.notifs||[]; S.notifs.unshift({id:"n"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),text:t,target,ts:Date.now(),read:false}); if(S.notifs.length>120) S.notifs.length=120; updateBell(); }
+  const el=$("#banner");$("#bannerText").textContent=t;S.bannerTarget=target||null;el.classList.toggle("tappable",!!target);el.classList.add("show");clearTimeout(banner.t);banner.t=setTimeout(()=>el.classList.remove("show"),target?4000:2200)}
+function updateBell(){ if(S.tab!=="home") return; const b=$("#navBtn .gbtn"); if(!b) return; const n=(S.notifs||[]).filter(x=>!x.read).length; let d=b.querySelector(".cdot"); if(!n){ if(d) d.remove(); return; } if(!d){ d=document.createElement("i"); d.className="cdot"; b.appendChild(d); } d.textContent=n>99?"99+":n; }
+function notifIcon(t){ return t.room?["var(--tint)",IC.tab.chat[1]]:t.post!=null?(t.comment?["var(--blue)",IC.bubble]:["var(--red)",IC.heart]):t.board!=null?["var(--orange)",IC.cal]:t.page==="friends"||t.user?["var(--indigo)",IC.people]:["var(--gray)",IC.bell]; }
+const callUI={ t0:0, timer:null, fake:null,
+  show(o){ const c=$("#call"); c.innerHTML=`<div class="call-top">${av(o.ini||"?",o.color||"#8e8e93",o.pic).replace('class="av','class="av call-av')}<b>${esc(o.name||"")}</b><span id="callSt">${esc(o.status||"")}</span></div>
+    <div class="call-btns">${o.incoming?`<button class="cbtn red" data-action="call-decline" aria-label="拒否">${IC.phone}<small>拒否</small></button><button class="cbtn green" data-action="call-accept" aria-label="応答">${IC.phone}<small>応答</small></button>`
+      :`<button class="cbtn glass" data-action="call-mute" aria-label="消音">${IC.mic}<small>消音</small></button><button class="cbtn red" data-action="call-end" aria-label="終了">${IC.phone}<small>終了</small></button>`}</div>`;
+    c.classList.add("open"); },
+  status(t){ const e=$("#callSt"); if(e) e.textContent=t; },
+  connected(){ this.t0=Date.now(); clearInterval(this.timer); this.timer=setInterval(()=>{ const s=Math.floor((Date.now()-this.t0)/1000); this.status(`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`); },500);
+    const b=document.querySelector(".call-btns"); if(b&&b.querySelector('[data-action="call-accept"]')) b.innerHTML=`<button class="cbtn glass" data-action="call-mute" aria-label="消音">${IC.mic}<small>消音</small></button><button class="cbtn red" data-action="call-end" aria-label="終了">${IC.phone}<small>終了</small></button>`; },
+  end(msg){ clearInterval(this.timer); clearTimeout(this.fake); const c=$("#call"); if(!c.classList.contains("open")) return; this.status(msg||"通話を終了しました"); setTimeout(()=>c.classList.remove("open"),1100); } };
+function startCall(u){ const x=USERS[u]; if(!x) return;
+  if(x.real&&SY.on&&SY.call){ SY.call(x.uid,{name:x.name,ini:x.ini,color:x.color,pic:x.pic}); return; }
+  callUI.show({name:x.name,ini:x.ini,color:x.color,pic:x.pic,status:"呼び出し中…",incoming:false});
+  callUI.fake=setTimeout(()=>callUI.end("応答がありませんでした（デモのメンバーです）"),4500); }
 function popAll(){ while(pages.length){ const p=pages.pop(); p.el.remove(); } $("#root").classList.remove("under"); $("#root").style.transform=""; S.room=null; }
 function goTarget(t){
   if(!t) return; closeCtx(); closeAlert(); const hadSheet=!!document.querySelector(".sheet-wrap.open"); if(hadSheet) closeSheets();
@@ -1289,29 +1499,32 @@ function goTarget(t){
 function updateLike(p){ document.querySelectorAll(`.like[data-id="${p.id}"]`).forEach(b=>{b.classList.toggle("on",p.liked);b.innerHTML=(p.liked?IC.heart:IC.heartO)+`<span>${p.likes}</span>`;}); }
 function sendComment(){
   const inp=$("#cInput"); const t=inp.value.trim(); if(!t) return;
-  const p=posts.find(x=>x.id==S.openPost); if(SY.on){ SY.comment(p.id,t); inp.value=""; return; } const c=[ME.name,ME.ini,ME.color,t];
-  p.comments.push(c); inp.value="";
-  const e=$("#cEmpty"); if(e) e.remove();
-  $("#cList").insertAdjacentHTML("beforeend",cItem(c,true)); $("#cCount").textContent=p.comments.length;
-  document.querySelectorAll(`.post[data-id="${p.id}"] .cm`).forEach(el=>el.innerHTML=IC.bubble+p.comments.length);
-  const b=$("#postSheetBody .sh-body"); b.scrollTo({top:b.scrollHeight,behavior:"smooth"});
+  const p=posts.find(x=>x.id==S.openPost); if(!p) return;
+  const parent=S.replyTo?S.replyTo.id:null; const id="l"+Date.now().toString(36);
+  const c={who:ME.name,ini:ME.ini,color:ME.color,pic:ME.pic,text:t,id,parent,mine:true,uid:SY.uid||null,ts:Date.now(),pending:SY.on};
+  p.comments.push(c); inp.value=""; setReply(null); hideMention();
+  paintComments(p,id,true);
+  if(SY.on) SY.comment(p.id,t,parent);
 }
 function msgHTML(m,isNew){
   if(m.sys) return `<div class="sysmsg">${esc(m.text)}</div>`;
-  const inner=(m.img?`<img class="mimg" src="${m.img}" alt="写真" data-action="viewimg">`:"")+(m.text?`<span>${esc(m.text)}</span>`:"");
+  const inner=(m.img?`<img class="mimg" src="${m.img}" alt="写真" data-action="viewimg">`:"")+(m.text?`<span>${rich(m.text)}</span>`:"");
   const cls=m.img&&!m.text?"bub pic":"bub"+(m.img?" picx":"");
   if(m.me) return `<div class="msg me ${isNew?"in":""}"><div class="${cls}">${inner}</div></div>`;
-  return `<div class="msg ${isNew?"in":""}">${av(m.ini,m.color)}<div><div class="who">${esc(m.who)}</div><div class="${cls}">${inner}</div></div></div>`;
+  return `<div class="msg ${isNew?"in":""}">${av(m.ini,m.color,m.pic)}<div><div class="who">${esc(m.who)}</div><div class="${cls}">${inner}</div></div></div>`;
 }
+function rwho(r){ const x=r.dm&&USERS[r.dm]; const st=x&&x.real?`<small class="rst ${x.online?"on":""}">${x.online?"● オンライン":"オフライン"}</small>`:r.mids&&!r.dm&&r.id==="team"?`<small class="rst">オンライン ${Math.max(1,r.members||1)}人</small>`:"";
+  return `${x?uav(r.dm):av(r.ini,r.color)}<span class="nm glass">${esc(r.name)} ›</span>${st}`; }
 function roomHTML(){
   const r=rooms.find(x=>x.id===S.room);
   return `<div class="pg-nav room-nav"><button class="gbtn glass" data-action="pop" aria-label="戻る">${IC.back}</button>
-    <button class="r-who" data-action="room-info">${av(r.ini,r.color)}<span class="nm glass">${esc(r.name)} ›</span></button><span></span></div>
+    <button class="r-who" data-action="room-info">${rwho(r)}</button>${r.dm?`<button class="gbtn glass r" data-action="call" data-u="${r.dm}" aria-label="音声通話" style="justify-self:end">${IC.phone}</button>`:"<span></span>"}</div>
     <div class="msgs"><div class="day">今日</div>${r.msgs.map(m=>msgHTML(m)).join("")}</div>
     <div class="composer"><label class="gbtn glass" aria-label="写真を送る"><input type="file" accept="image/*" class="chatFile" hidden>${IC.photo}</label><div class="field-wrap glass"><input class="msgInput" placeholder="メッセージ" autocomplete="off" enterkeyhint="send"><button class="send" data-action="send-msg" aria-label="送信">${IC.up}</button></div></div>`;
 }
-function resizeImage(file,cb){ const img=new Image(), url=URL.createObjectURL(file);
-  img.onload=()=>{ const max=900, k=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url); cb(c.toDataURL("image/jpeg",.72)); };
+function resizeImage(file,cb,max0){ if(file.type==="image/gif"&&file.size<2400000){ const fr=new FileReader(); fr.onload=()=>cb(fr.result); fr.readAsDataURL(file); return; }
+  const img=new Image(), url=URL.createObjectURL(file);
+  img.onload=()=>{ const max=max0||900, k=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url); cb(c.toDataURL("image/jpeg",.72)); };
   img.src=url; }
 function sendChatImage(data){
   const top=pages[pages.length-1]; if(!top||top.key!=="room") return;
@@ -1322,7 +1535,7 @@ function sendChatImage(data){
   const ms=(r.mids&&r.mids.length?r.mids:["tanaka"]).filter(u=>USERS[u]&&!USERS[u].real), u=ms[Math.floor(Math.random()*ms.length)]||"tanaka", x=USERS[u], rid=r.id;
   setTimeout(()=>{ if(S.room!==rid) return; const rp={who:x.name,ini:x.ini,color:x.color,text:["すてきな写真ですね！","よく育ってる！","ありがとうございます📸"][r.msgs.length%3],time:nowTime()}; r.msgs.push(rp); box.insertAdjacentHTML("beforeend",msgHTML(rp,true)); box.scrollTop=box.scrollHeight; },1500);
 }
-function openRoom(id){ S.room=id; rooms.find(x=>x.id===id).unread=0; pushPage("room"); setTimeout(refresh,420); }
+function openRoom(id){ S.room=id; rooms.find(x=>x.id===id).unread=0; pushPage("room"); setTimeout(refresh,420); if(SY.on&&SY.isSynced&&SY.isSynced(id)){ if(SY.repaintRoom) setTimeout(SY.repaintRoom,30); if(SY.markRead) SY.markRead(id); } }
 function sendMsg(){
   const top=pages[pages.length-1]; if(!top||top.key!=="room") return;
   const inp=top.el.querySelector(".msgInput"); const t=inp.value.trim(); if(!t) return;
@@ -1345,18 +1558,73 @@ function sendMsg(){
     },1300);
   },900);
 }
+function locInfo(v){ const main=Object.keys(R.gardens).find(k=>R.gardens[k]==="main")||"umeda";
+  if(v==="mine") return {g:main,scope:"mine",place:null};
+  if(v==="kansai") return {g:main,scope:"kansai",place:"関西全域"};
+  const g=Object.keys(G).find(k=>G[k].pref===v)||main; return {g,scope:"kansai",place:v}; }
 function publish(){
   const t=$("#postText").value.trim()||"今日も畑に来ました🌱";
   if(S.editId!=null){ const id=S.editId, p=posts.find(x=>x.id==id); S.editId=null;
     if(p){ if(SY.on&&typeof p.id==="string") SY.edit(p.id,{text:t,art:composeArt,img:composeImg}); else { p.text=t; p.art=composeArt; p.img=composeImg; p.edited=true; } }
     closeSheets(); refresh(); setTimeout(()=>banner("投稿を編集しました"),300); return; }
-  if(SY.on){ SY.post({art:composeArt,img:composeImg,text:t}); closeSheets(); S.tab="home"; S.scope="mine"; render(); $("#screen").scrollTo({top:0,behavior:"smooth"}); return; }
-  posts.unshift({id:nextId++,g:"umeda",scope:"mine",who:ME.name,ini:ME.ini,color:ME.color,art:composeArt,img:composeImg,text:t,likes:0,liked:false,time:"たった今",comments:[],isNew:true,base:0,seedC:[],own:true});
+  const L=locInfo(S.cLoc||"mine");
+  if(SY.on){ SY.post({art:composeArt,img:composeImg,text:t,...L}); closeSheets(); S.tab="home"; S.scope="mine"; render(); $("#screen").scrollTo({top:0,behavior:"smooth"}); return; }
+  posts.unshift({id:nextId++,...L,who:ME.name,ini:ME.ini,color:ME.color,pic:ME.pic,art:composeArt,img:composeImg,text:t,likes:0,liked:false,time:"たった今",comments:[],isNew:true,base:0,seedC:[],own:true});
   closeSheets(); S.tab="home"; S.scope="mine"; render(); $("#screen").scrollTo({top:0,behavior:"smooth"});
   posts[0].isNew=false; setTimeout(()=>banner("投稿をシェアしました"),300);
 }
 function onScroll(){ $("#nav").classList.toggle("scrolled",$("#screen").scrollTop>24); }
 $("#screen").addEventListener("scroll",onScroll,{passive:true});
+/* タブバーを指でなぞって切り替え */
+let tb=null, tabDragged=0;
+$("#tabs").addEventListener("pointerdown",e=>{ const row=$("#tabRow").getBoundingClientRect(); tb={x0:e.clientX,row,moved:false,id:e.pointerId}; });
+$("#tabs").addEventListener("pointermove",e=>{ if(!tb||e.pointerId!==tb.id) return; if(!tb.moved&&Math.abs(e.clientX-tb.x0)<8) return;
+  if(!tb.moved){ tb.moved=true; try{ $("#tabs").setPointerCapture(e.pointerId); }catch(_){} $("#tabInd").classList.add("drag"); }
+  const f=Math.max(0,Math.min(3,(e.clientX-tb.row.left)/tb.row.width*4-.5)); const ind=$("#tabInd"); ind.style.setProperty("--i",f);
+  document.querySelectorAll("#tabRow .tab").forEach((t,i)=>t.classList.toggle("hover",Math.round(f)===i)); });
+const tbEnd=e=>{ if(!tb) return; const was=tb; tb=null; if(!was.moved) return; tabDragged=Date.now();
+  const f=Math.max(0,Math.min(3,(e.clientX-was.row.left)/was.row.width*4-.5)), i=Math.round(f), keys=["home","board","chat","me"];
+  const ind=$("#tabInd"); ind.classList.remove("drag"); document.querySelectorAll("#tabRow .tab").forEach(t=>t.classList.remove("hover"));
+  if(keys[i]!==S.tab){ S.tab=keys[i]; render(); $("#screen").scrollTop=0; onScroll(); } else { ind.style.setProperty("--i",i); } };
+$("#tabs").addEventListener("pointerup",tbEnd); $("#tabs").addEventListener("pointercancel",tbEnd);
+
+/* ホームを下に引っ張って更新 */
+let pt=null;
+$("#screen").addEventListener("touchstart",e=>{ if(S.tab!=="home"||$("#screen").scrollTop>0||e.touches.length>1) return; pt={y0:e.touches[0].clientY,x0:e.touches[0].clientX,d:0}; },{passive:true});
+$("#screen").addEventListener("touchmove",e=>{ if(!pt||pt.busy) return; const dy=e.touches[0].clientY-pt.y0; if(dy<=0||$("#screen").scrollTop>0){ if(pt.d){ pt.d=0; $("#screen").style.transform=""; } return; }
+  if(Math.abs(e.touches[0].clientX-pt.x0)>dy) return; if(e.cancelable) e.preventDefault(); lpCancel();
+  pt.d=Math.min(120,dy*.5); const sc=$("#screen"), ptr=$("#ptr"); sc.style.transition="none"; sc.style.transform=`translateY(${pt.d}px)`;
+  ptr.style.opacity=Math.min(1,pt.d/60); ptr.style.transform=`translateX(-50%) rotate(${pt.d*4}deg) scale(${.6+Math.min(.4,pt.d/150)})`; ptr.classList.toggle("ready",pt.d>=64); },{passive:false});
+$("#screen").addEventListener("touchend",()=>{ if(!pt) return; const sc=$("#screen"), ptr=$("#ptr"), d=pt.d; sc.style.transition="transform .35s cubic-bezier(.3,.9,.3,1)";
+  if(d>=64){ pt.busy=true; sc.style.transform="translateY(56px)"; ptr.classList.add("spin"); ptr.style.transform="translateX(-50%)"; ptr.style.opacity=1;
+    setTimeout(()=>{ if(SY.refreshNow) SY.refreshNow(); posts.forEach(p=>{ if(p.ts) p.time=agoTs(p.ts); }); refresh(); sc.style.transform=""; ptr.classList.remove("spin","ready"); ptr.style.opacity=0; pt=null; },1100); }
+  else { sc.style.transform=""; ptr.style.opacity=0; ptr.classList.remove("ready"); pt=null; } });
+function agoTs(ts){ const m=Math.floor((Date.now()-ts)/60000); return m<1?"たった今":m<60?m+"分前":m<1440?Math.floor(m/60)+"時間前":Math.floor(m/1440)+"日前"; }
+
+/* メンション候補 */
+function mentionCands(q){ const seen=new Set(); const out=[]; const add=(n,ini,color,pic,sub)=>{ if(!n||n===ME.name||seen.has(n)) return; seen.add(n); out.push({n,ini,color,pic,sub}); };
+  Object.keys(USERS).filter(k=>USERS[k].real).forEach(k=>{ const x=USERS[k]; add(x.name,x.ini,x.color,x.pic,x.online?"オンライン":"発表メンバー"); });
+  R.friends.forEach(k=>{ const x=USERS[k]; if(x) add(x.name,x.ini,x.color,x.pic,"フレンド"); });
+  Object.keys(USERS).forEach(k=>{ const x=USERS[k]; add(x.name,x.ini,x.color,x.pic,G[x.g]?G[x.g].name:""); });
+  return out.filter(c=>!q||c.n.includes(q)).slice(0,6); }
+let mTarget=null;
+function hideMention(){ const b=$("#mbox"); if(b) b.classList.remove("open"); mTarget=null; }
+function checkMention(inp){ const pos=inp.selectionStart||inp.value.length, before=inp.value.slice(0,pos), m=before.match(/@([^\s@]{0,16})$/);
+  if(!m){ hideMention(); return; } const list=mentionCands(m[1]); if(!list.length){ hideMention(); return; }
+  mTarget={inp,start:pos-m[0].length,end:pos}; const b=$("#mbox"), ar=$("#app").getBoundingClientRect(), r=inp.getBoundingClientRect();
+  b.innerHTML=list.map(c=>`<button data-action="mention-pick" data-n="${esc(c.n)}">${av(c.ini,c.color,c.pic)}<span class="grow">${esc(c.n)}<small>${esc(c.sub||"")}</small></span></button>`).join("");
+  b.style.left=Math.max(10,r.left-ar.left)+"px"; b.style.width=Math.min(ar.width-20,Math.max(240,r.width))+"px"; b.style.bottom=(ar.bottom-r.top+8)+"px"; b.classList.add("open"); }
+document.addEventListener("input",e=>{ if(e.target.id==="cInput"||e.target.id==="postText"||(e.target.classList&&e.target.classList.contains("msgInput"))) checkMention(e.target); });
+document.addEventListener("focusout",e=>{ if(e.target.id==="cInput"||e.target.id==="postText"||(e.target.classList&&e.target.classList.contains("msgInput"))) setTimeout(()=>{ if(!document.activeElement||!document.activeElement.closest("#mbox")) { const a=document.activeElement; if(!(a&&(a.id==="cInput"||a.id==="postText"||(a.classList&&a.classList.contains("msgInput"))))) hideMention(); } },200); });
+
+/* 画像ビューアはスワイプで閉じる */
+let vw=null;
+$("#viewer").addEventListener("pointerdown",e=>{ if(e.target.closest(".gbtn")) return; vw={y0:e.clientY,x0:e.clientX,t:Date.now(),id:e.pointerId}; try{ $("#viewer").setPointerCapture(e.pointerId); }catch(_){} $("#viewerImg").style.transition="none"; });
+$("#viewer").addEventListener("pointermove",e=>{ if(!vw||e.pointerId!==vw.id) return; const dy=e.clientY-vw.y0, dx=e.clientX-vw.x0; vw.dy=dy; $("#viewerImg").style.transform=`translate(${dx*.4}px,${dy}px) scale(${1-Math.min(.25,Math.abs(dy)/1200)})`; $("#viewer").style.background=`rgba(0,0,0,${Math.max(.15,.92-Math.abs(dy)/500)})`; });
+const vwEnd=()=>{ if(!vw) return; const dy=vw.dy||0, fast=Math.abs(dy)/(Date.now()-vw.t)>.6; vw=null; const im=$("#viewerImg"), v=$("#viewer"); im.style.transition="transform .3s cubic-bezier(.3,.9,.3,1)";
+  if(Math.abs(dy)>110||(fast&&Math.abs(dy)>40)){ im.style.transform=`translateY(${dy>0?"110%":"-110%"})`; v.classList.remove("open"); setTimeout(()=>{ im.style.transform=""; v.style.background=""; },300); }
+  else { im.style.transform=""; v.style.background=""; } };
+$("#viewer").addEventListener("pointerup",vwEnd); $("#viewer").addEventListener("pointercancel",vwEnd);
 
 let lpT=null,lpX=0,lpY=0,lpFired=false,lpSuppress=0;
 function lpStart(post,x,y){ lpCancel(); lpX=x; lpY=y; lpFired=false; post.classList.add("pressing");
@@ -1386,7 +1654,7 @@ $("#app").addEventListener("click",e=>{
     case "close-sheet": closeSheets(); break;
     case "close-sheet-bg": if(e.target===el) closeSheets(); break;
     case "send-comment": sendComment(); break;
-    case "tab": if(S.tab===el.dataset.tab){$("#screen").scrollTo({top:0,behavior:"smooth"});break;} S.tab=el.dataset.tab; render(); $("#screen").scrollTop=0; onScroll(); break;
+    case "tab": if(Date.now()-tabDragged<350) break; if(S.tab===el.dataset.tab){$("#screen").scrollTo({top:0,behavior:"smooth"});break;} S.tab=el.dataset.tab; render(); $("#screen").scrollTop=0; onScroll(); break;
     case "filter": S.filter=el.dataset.cat; render(); break;
     case "join": { const b=board.find(x=>x.id==id); b.joined=!b.joined; b.n+=b.joined?1:-1; if(SY.on) SY.join(b.id,b.joined); refresh(); if(b.joined) banner(b.cat==="おすそわけ"?"受け取りを申し込みました":"「"+b.title+"」に参加登録しました"); break; }
     case "open-room": if(S.room===id&&pages.some(p=>p.key==="room")){ while(pages.length&&pages[pages.length-1].key!=="room") popPage(); break; } openRoom(id); break;
@@ -1424,7 +1692,20 @@ $("#app").addEventListener("click",e=>{
       setTimeout(refresh,260); break; }
     case "choose": put(el.dataset.key,el.dataset.val); refresh(); break;
     case "theme": SET.theme=v; applyTheme(); refresh(); break;
-    case "avcolor": ME.color=AV_COLORS[(AV_COLORS.indexOf(ME.color)+1)%AV_COLORS.length]; refresh(); break;
+    case "avcolor": openAvatar(); break;
+    case "av-t": AV.pic=v||null; avRefresh(); break;
+    case "av-c": AV.color=v; avRefresh(); break;
+    case "av-save": ME.pic=AV.pic; ME.color=AV.color; try{ if(ME.pic) localStorage.setItem("farming-pic",ME.pic); else localStorage.removeItem("farming-pic"); }catch(_){}
+      renameMine(); if(SY.saveMe) SY.saveMe(); closeSheets(); refresh(); setTimeout(()=>banner("アイコンを変更しました"),300); break;
+    case "reply": { const c=el.dataset.cid; setReply({id:c,who:el.dataset.who}); break; }
+    case "reply-cancel": { const inp=$("#cInput"); if(inp&&S.replyTo&&inp.value.startsWith("@"+S.replyTo.who+" ")) inp.value=inp.value.slice(S.replyTo.who.length+2); setReply(null); break; }
+    case "mention-pick": { if(!mTarget) break; const {inp,start,end}=mTarget, n=el.dataset.n; inp.value=inp.value.slice(0,start)+"@"+n+" "+inp.value.slice(end); const c=start+n.length+2; inp.focus(); try{ inp.setSelectionRange(c,c); }catch(_){} hideMention(); break; }
+    case "cloc": S.cLoc=v; document.querySelectorAll(".cloc .chip").forEach(b=>b.classList.toggle("on",b===el)); break;
+    case "act": S.act=v; refresh(); break;
+    case "notif-go": { const n=(S.notifs||[]).find(x=>x.id===v); if(n){ n.read=true; goTarget(n.target); } break; }
+    case "notif-all": (S.notifs||[]).forEach(n=>n.read=true); refresh(); break;
+    case "friend-menu": { const u=el.dataset.u; iosAlert(`${USERS[u].name}さんをフレンドから削除しますか？`,"相手には通知されません。あとからもう一度申請できます。",[{label:"キャンセル"},{label:"削除",style:"red",fn:()=>{ if(USERS[u].real&&SY.on){ SY.unfriend(USERS[u].uid); } else { R.friends=R.friends.filter(x=>x!==u); refresh(); } banner(`${USERS[u].name}さんをフレンドから削除しました`); }}]); break; }
+    case "f-edit": S.fEdit=!S.fEdit; refresh(); break;
     case "restab": R.resTab=+v; refresh(); break;
     case "day": R.day=+v; R.tools.forEach(t=>{ if(!t.res) t.left = t.id==="t2" ? (R.day%3===0?1:0) : t.left; }); refresh(); break;
     case "time": R.time=+v; refresh(); break;
@@ -1437,9 +1718,14 @@ $("#app").addEventListener("click",e=>{
     case "join-garden": R.gardens[el.dataset.g]="joined"; refresh(); banner(G[el.dataset.g].name+"に参加しました"); break;
     case "faq": S.faq[v]=!S.faq[v]; refresh(); break;
     case "info": iosAlert(v,"コンペ提案用の試作アプリのため、内容は準備中です。",[{label:"OK",style:"main"}]); break;
-    case "logout": iosAlert("ログアウトしますか？","デモ用のデータは最初の状態に戻ります。",[{label:"キャンセル"},{label:"ログアウト",style:"red",fn:()=>{setTimeout(()=>{reset();banner("ログアウトしました");},250);}}]); break;
+    case "logout": iosAlert("ログアウトしますか？","デモ用のデータは最初の状態に戻ります。",[{label:"キャンセル"},{label:"ログアウト",style:"red",fn:()=>{setTimeout(()=>{clearSaved(); noRestore=true; reset(); saveState(true); banner("ログアウトしました");},250);}}]); break;
     case "alert": closeAlert(); alertFns[+v](); break;
     case "harvest-add": openHarvest(); break;
+    case "call": startCall(el.dataset.u); break;
+    case "call-accept": if(SY.accept) SY.accept(); break;
+    case "call-decline": if(SY.decline) SY.decline(); break;
+    case "call-end": if(SY.endCall&&!callUI.fake) SY.endCall(); else callUI.end("通話を終了しました"); break;
+    case "call-mute": { const on=!el.classList.contains("on"); el.classList.toggle("on",on); if(SY.mute) SY.mute(on); break; }
     case "banner-go": { const t=S.bannerTarget; $("#banner").classList.remove("show"); S.bannerTarget=null; goTarget(t); break; }
     case "viewimg": $("#viewerImg").src=el.getAttribute("src"); $("#viewer").classList.add("open"); break;
     case "viewer-close": $("#viewer").classList.remove("open"); break;
@@ -1490,12 +1776,10 @@ $("#app").addEventListener("input",e=>{
   if(e.target.id==="evPlace") E.place=e.target.value;
 });
 $("#app").addEventListener("change",e=>{
-  if(e.target.dataset&&e.target.dataset.field){ saveBase(); if(SY.saveMe) SY.saveMe(); }
+  if(e.target.dataset&&e.target.dataset.field){ saveBase(); renameMine(); if(SY.saveMe) SY.saveMe(); }
   if(e.target.classList&&e.target.classList.contains("chatFile")&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; resizeImage(f,sendChatImage); return; }
-  if(e.target.id==="upFile"&&e.target.files[0]){ const f=e.target.files[0], img=new Image(), url=URL.createObjectURL(f);
-    img.onload=()=>{ const max=900, k=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); composeImg=c.toDataURL("image/jpeg",.72); URL.revokeObjectURL(url);
-      $("#upPrev").innerHTML=`<img src="${composeImg}" alt="">`; document.querySelectorAll(".pick button").forEach(b=>b.classList.remove("on")); };
-    img.src=url; return; } if(e.target.dataset.field||e.target.id==="gRename") refresh(); });
+  if(e.target.id==="upFile"&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; resizeImage(f,d=>{ composeImg=d; $("#upPrev").innerHTML=`<img src="${d}" alt="">`; document.querySelectorAll(".pick button").forEach(b=>b.classList.remove("on")); }); return; }
+  if(e.target.id==="avFile"&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; const done=d=>{ AV.pic=d; avRefresh(); }; if(f.type==="image/gif"&&f.size<700000) resizeImage(f,done); else squareImage(f,done); return; } if(e.target.dataset.field||e.target.id==="gRename") refresh(); });
 document.addEventListener("focusout",e=>{ if(S&&S.pendingRefresh&&/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ setTimeout(()=>{ const ae=document.activeElement; if(!(ae&&/^(INPUT|TEXTAREA)$/.test(ae.tagName))){ S.pendingRefresh=false; refresh(); } },60); } });
 $("#app").addEventListener("keydown",e=>{
   if(e.key!=="Enter"||e.isComposing) return;
@@ -1533,7 +1817,7 @@ reset();
 <script type="module">
 /* ===== Firebase Realtime Database によるスマホ間リアルタイム同期 ===== */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, push, remove, update, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-database.js";
+import { getDatabase, ref, onValue, set, push, remove, update, onDisconnect, serverTimestamp, get } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhu8VGAeBkAvndYXPKYtWz_060oqw23BM",
@@ -1546,7 +1830,7 @@ const firebaseConfig = {
 };
 const ROOT="v1";
 const SY=window.SY;
-let db, uid, D={deleted:{},posts:{},likes:{},comments:{},joins:{},msgs:{},presence:{},users:{},freq:{},friends:{}}, seen={}, ready={}, connected=false;
+let db, uid, D={reads:{},deleted:{},posts:{},likes:{},comments:{},joins:{},msgs:{},presence:{},users:{},freq:{},friends:{}}, seen={}, ready={}, connected=false;
 const t0=Date.now();
 const COLORS=["#f07a1c","#e2452e","#2bb5b0","#6c5bb8","#3b8fd6","#4c8a34","#b13b5a","#e8a317"];
 const SYNC_ROOMS=["team","all"];
@@ -1556,20 +1840,24 @@ const cnt=o=>o?Object.keys(o).length:0;
 const mine=()=>({uid,who:ME.name,ini:ME.ini,color:ME.color});
 
 try{ uid=localStorage.getItem("farming-uid"); if(!uid){ uid="u"+Math.random().toString(36).slice(2,10); localStorage.setItem("farming-uid",uid); } }catch(e){ uid="u"+Math.random().toString(36).slice(2,10); }
-function loadMe(){ try{ const m=JSON.parse(localStorage.getItem("farming-me")||"null"); if(m&&m.name){ ME.name=m.name; ME.ini=m.name[0]; ME.color=m.color||ME.color; return true; } }catch(e){} return false; }
-function saveMe(){ try{ localStorage.setItem("farming-me",JSON.stringify({name:ME.name,color:ME.color})); }catch(e){} if(db){ const me={name:ME.name,ini:ME.ini,color:ME.color,bio:SET.bio||"",pref:SET.base.pref||"",city:SET.base.city||"",ts:serverTimestamp()}; set(ref(db,`${ROOT}/presence/${uid}`),me); set(ref(db,`${ROOT}/users/${uid}`),me); } }
+function loadMe(){ try{ const m=JSON.parse(localStorage.getItem("farming-me")||"null"); if(m&&m.name){ ME.name=m.name; ME.ini=m.name[0]; ME.color=m.color||ME.color; named=true; return true; } }catch(e){} return false; }
+let named=false;
+function saveMe(){ if(!named) return; try{ localStorage.setItem("farming-me",JSON.stringify({name:ME.name,color:ME.color})); }catch(e){} if(db){ const me={name:ME.name,ini:ME.ini,color:ME.color,pic:ME.pic||null,bio:SET.bio||"",pref:SET.base.pref||"",city:SET.base.city||"",ts:serverTimestamp()}; set(ref(db,`${ROOT}/presence/${uid}`),me); set(ref(db,`${ROOT}/users/${uid}`),me); } }
 
 /* ---------- 受信データをアプリの状態に反映 ---------- */
 function apply(){
   if(typeof posts==="undefined"||!posts) return;
-  const remote=Object.entries(D.posts||{}).map(([k,v])=>({...v,id:k,base:0,seedC:[],g:v.g||"umeda",scope:v.scope||"mine",time:ago(v.ts)})).sort((a,b)=>(b.ts||0)-(a.ts||0));
+  const who=v=>{ const u=v.uid===uid?{name:ME.name,color:ME.color,pic:ME.pic}:(D.users[v.uid]||{}); const n=u.name||v.who||"メンバー"; return {who:n,ini:n[0],color:u.color||v.color,pic:u.pic||null}; };
+  const pend={}; (posts||[]).forEach(p=>{ const l=(p.comments||[]).filter(c=>c&&c.pending); if(l.length) pend[p.id]=l; });
+  const remote=Object.entries(D.posts||{}).map(([k,v])=>({...v,...who(v),id:k,base:0,seedC:[],g:v.g||"umeda",scope:v.scope||"mine",time:ago(v.ts)})).sort((a,b)=>(b.ts||0)-(a.ts||0));
   const local=posts.filter(p=>typeof p.id==="number");
   posts=[...remote,...local].filter(p=>!D.deleted[p.id]);
   posts.forEach(p=>{
     const L=D.likes[p.id]||{};
     p.likes=(p.base||0)+cnt(L); p.liked=!!L[uid];
-    const C=Object.values(D.comments[p.id]||{}).sort((a,b)=>(a.ts||0)-(b.ts||0)).map(c=>[c.who,c.ini,c.color,c.text]);
-    p.comments=[...(p.seedC||[]),...C];
+    const C=Object.entries(D.comments[p.id]||{}).sort((a,b)=>(a[1].ts||0)-(b[1].ts||0)).map(([k,c])=>({...who(c),text:c.text,id:k,parent:c.parent||null,uid:c.uid,ts:c.ts,mine:c.uid===uid}));
+    const P=(pend[p.id]||[]).filter(c=>Date.now()-c.ts<9000&&!C.some(r=>r.uid===uid&&r.text===c.text));
+    p.comments=[...(p.seedC||[]),...C,...P];
   });
   board.forEach(b=>{ const J=D.joins[b.id]||{}; b.n=(b.base??b.n)+cnt(J); b.joined=!!J[uid]; });
   Object.keys(D.users||{}).forEach(id=>{ if(id!==uid) ensureUser(id); });
@@ -1583,25 +1871,81 @@ function apply(){
   });
   rooms.filter(r=>SY.isSynced(r.id)).map(r=>r.id).forEach(id=>{
     const r=rooms.find(x=>x.id===id); if(!r) return;
-    const M=Object.values(D.msgs[id]||{}).sort((a,b)=>(a.ts||0)-(b.ts||0)).map(m=>({who:m.who,ini:m.ini,color:m.color,text:m.text,img:m.img||null,time:hm(m.ts),me:m.uid===uid}));
+    const M=Object.values(D.msgs[id]||{}).sort((a,b)=>(a.ts||0)-(b.ts||0)).map(m=>({...who(m),text:m.text,img:m.img||null,time:hm(m.ts),ts:m.ts,uid:m.uid,me:m.uid===uid}));
     r.msgs=[...(r.seedMsgs||[]),...M];
     if(id==="team") r.members=Math.max(1,cnt(D.presence));
   });
 }
+function roomMsgsHTML(r){
+  const parts=r.msgs.map(m=>msgHTML(m)); let last=-1; r.msgs.forEach((m,i)=>{ if(m.me&&m.ts) last=i; });
+  if(last>=0){ const t=r.msgs[last].ts, rd=Object.entries(D.reads[r.id]||{}).filter(([u,x])=>u!==uid&&x>=t).length;
+    parts[last]+=`<div class="delivered">${rd?(r.dm?"既読":"既読 "+rd):"送信済み"}</div>`; }
+  return parts.join(""); }
+let lastRead={};
+function markRead(rid){ if(!db||!SET.read||!SY.isSynced(rid)) return; const r=rooms.find(x=>x.id===rid); const t=r&&r.msgs.length?(r.msgs[r.msgs.length-1].ts||0):0; if(lastRead[rid]&&lastRead[rid]>=t) return; lastRead[rid]=t||Date.now(); set(ref(db,`${ROOT}/reads/${rid}/${uid}`),serverTimestamp()); }
+SY.markRead=markRead;
+SY.repaintRoom=()=>repaint("open");
+SY.refreshNow=()=>apply();
+const ICE={iceServers:[{urls:["stun:stun.l.google.com:19302","stun:stun1.l.google.com:19302"]}]};
+let pc=null, lstream=null, call=null, unsubCall=null, ringT=null;
+const off=u=>{ if(typeof u==="function") u(); };
+function addIce(list,seen){ Object.entries(list||{}).forEach(([k,c])=>{ if(seen.has(k)||!pc) return; seen.add(k); pc.addIceCandidate(c).catch(()=>{}); }); }
+function newPC(ontrackEl){ const c=new RTCPeerConnection(ICE); c.ontrack=e=>{ const a=$("#callAudio"); a.srcObject=e.streams[0]; a.play().catch(()=>{}); };
+  c.onconnectionstatechange=()=>{ if(!call) return; if(c.connectionState==="connected"){ callUI.connected(); } if(["failed","disconnected"].includes(c.connectionState)) endCall("通話が切れました"); }; return c; }
+function endCall(msg,silent){ clearTimeout(ringT); off(unsubCall); unsubCall=null;
+  const c=call; call=null; if(pc){ try{ pc.close(); }catch(_){} pc=null; } if(lstream){ lstream.getTracks().forEach(t=>t.stop()); lstream=null; }
+  if(c&&c.ref&&!silent) remove(c.ref).catch(()=>{}); callUI.end(msg); }
+SY.endCall=()=>endCall("通話を終了しました");
+SY.mute=on=>{ if(lstream) lstream.getAudioTracks().forEach(t=>t.enabled=!on); };
+SY.call=async(peer,info)=>{
+  if(call||!db) return; const cref=ref(db,`${ROOT}/calls/${peer}`);
+  callUI.show({...info,status:D.presence[peer]?"呼び出し中…":"呼び出し中…（相手はオフラインです）",incoming:false});
+  try{ lstream=await navigator.mediaDevices.getUserMedia({audio:true}); }catch(e){ callUI.end("マイクの使用が許可されていません"); return; }
+  call={peer,role:"caller",ref:cref}; pc=newPC(); lstream.getTracks().forEach(t=>pc.addTrack(t,lstream));
+  pc.onicecandidate=e=>{ if(e.candidate) push(ref(db,`${ROOT}/calls/${peer}/cc`),e.candidate.toJSON()); };
+  const offer=await pc.createOffer(); await pc.setLocalDescription(offer);
+  await set(cref,{from:uid,name:ME.name,ini:ME.ini,color:ME.color,pic:ME.pic||null,offer:{type:offer.type,sdp:offer.sdp},state:"ringing",ts:serverTimestamp()});
+  const seen=new Set();
+  unsubCall=onValue(cref,s=>{ const v=s.val(); if(!call) return; if(!v){ endCall("通話を終了しました",true); return; }
+    if(v.state==="declined"){ endCall("相手が応答できませんでした"); return; }
+    if(v.answer&&pc&&!pc.currentRemoteDescription){ pc.setRemoteDescription(v.answer).then(()=>addIce(v.ac,seen)).catch(()=>{}); callUI.status("接続しています…"); clearTimeout(ringT); }
+    else if(pc&&pc.currentRemoteDescription) addIce(v.ac,seen); });
+  ringT=setTimeout(()=>{ if(call&&pc&&!pc.currentRemoteDescription) endCall("応答がありませんでした"); },30000);
+};
+let incoming=null;
+function listenIncoming(){
+  onValue(ref(db,`${ROOT}/calls/${uid}`),s=>{ const v=s.val();
+    if(!v){ if(call&&call.role==="callee") endCall("通話を終了しました",true); if(incoming){ incoming=null; callUI.end("不在着信"); banner("不在着信がありました",null); } return; }
+    if(call&&call.role==="callee"){ if(pc&&pc.currentRemoteDescription) addIce(v.cc,call.seen); return; }
+    if(call) return;
+    if(v.state==="ringing"&&!incoming&&Date.now()-(v.ts||Date.now())<45000){ incoming=v; callUI.show({name:v.name,ini:v.ini,color:v.color,pic:v.pic,status:"音声通話の着信",incoming:true}); if(navigator.vibrate) navigator.vibrate([300,200,300]); }
+  });
+}
+SY.accept=async()=>{ const v=incoming; if(!v) return; incoming=null; const cref=ref(db,`${ROOT}/calls/${uid}`);
+  try{ lstream=await navigator.mediaDevices.getUserMedia({audio:true}); }catch(e){ update(cref,{state:"declined"}); callUI.end("マイクの使用が許可されていません"); return; }
+  call={peer:v.from,role:"callee",ref:cref,seen:new Set()}; pc=newPC(); lstream.getTracks().forEach(t=>pc.addTrack(t,lstream));
+  pc.onicecandidate=e=>{ if(e.candidate) push(ref(db,`${ROOT}/calls/${uid}/ac`),e.candidate.toJSON()); };
+  await pc.setRemoteDescription(v.offer); const ans=await pc.createAnswer(); await pc.setLocalDescription(ans);
+  await update(cref,{answer:{type:ans.type,sdp:ans.sdp},state:"active"}); callUI.status("接続しています…");
+  get(cref).then(sn=>{ const x=sn.val(); if(x) addIce(x.cc,call.seen); }); };
+SY.decline=()=>{ if(!incoming) return; incoming=null; update(ref(db,`${ROOT}/calls/${uid}`),{state:"declined"}).then(()=>setTimeout(()=>remove(ref(db,`${ROOT}/calls/${uid}`)),1500)); callUI.end("拒否しました"); };
+function mentionsMe(t){ return !!t&&ME.name&&String(t).includes("@"+ME.name); }
 function repaint(kind){
   apply();
   // 開いている投稿シート
   if(S.openPost!=null && document.querySelector("#postSheet.open")){
     const p=posts.find(x=>x.id==S.openPost);
     if(!p){ closeSheets(); }
-    if(p){ const list=$("#cList"); if(list && list.children.length!==p.comments.length){ list.innerHTML=p.comments.map(c=>cItem(c)).join("")||`<div class="c-empty" id="cEmpty">最初のコメントを書いてみましょう</div>`; const b=$("#postSheetBody .sh-body"); b.scrollTo({top:b.scrollHeight,behavior:"smooth"}); }
-      const cc=$("#cCount"); if(cc) cc.textContent=p.comments.length; updateLike(p); }
+    if(p){ const list=$("#cList"); if(list){ const ids=p.comments.map((c,i)=>toC(c,i).id), sig=ids.join(",")+"|"+p.comments.map(c=>toC(c).who).join(",");
+        if(list.dataset.sig!==sig){ const prev=(list.dataset.sig||"").split("|")[0].split(","); const nid=list.dataset.sig?ids.find(id=>!prev.includes(id)):null; paintComments(p,nid,!!nid); list.dataset.sig=sig; } }
+      updateLike(p); }
   }
   // 開いているトーク
   const rp=pages.find(x=>x.key==="room");
   if(rp && SY.isSynced(S.room)){
     const r=rooms.find(x=>x.id===S.room), box=rp.el.querySelector(".msgs");
-    if(r&&box){ const atEnd=box.scrollHeight-box.scrollTop-box.clientHeight<80; box.innerHTML=`<div class="day">今日</div>`+r.msgs.map(m=>msgHTML(m)).join(""); if(atEnd||kind==="msgs") box.scrollTop=box.scrollHeight; }
+    if(r&&box){ const atEnd=box.scrollHeight-box.scrollTop-box.clientHeight<80; box.innerHTML=`<div class="day">今日</div>`+roomMsgsHTML(r); if(atEnd||kind==="msgs") box.scrollTop=box.scrollHeight;
+      if(document.visibilityState==="visible") markRead(r.id); }
   }
   if(kind==="msgs" && !document.querySelector(".msgs")) {} 
   refresh();
@@ -1614,16 +1958,16 @@ function notifyNew(path,obj,fn,root){
 }
 
 /* ---------- 送信 ---------- */
-SY.post=({art,img,text})=>push(ref(db,`${ROOT}/posts`),{...mine(),art:art||"basket",img:img||null,text,g:"umeda",scope:"mine",ts:serverTimestamp()});
+SY.post=({art,img,text,g,scope,place})=>push(ref(db,`${ROOT}/posts`),{...mine(),art:art||"basket",img:img||null,text,g:g||"umeda",scope:scope||"mine",place:place||null,ts:serverTimestamp()});
 SY.like=(pid,on)=>on?set(ref(db,`${ROOT}/likes/${pid}/${uid}`),{uid,who:ME.name,ts:serverTimestamp()}):remove(ref(db,`${ROOT}/likes/${pid}/${uid}`));
-SY.comment=(pid,text)=>push(ref(db,`${ROOT}/comments/${pid}`),{...mine(),text,ts:serverTimestamp()});
+SY.comment=(pid,text,parent)=>push(ref(db,`${ROOT}/comments/${pid}`),{...mine(),text,parent:parent||null,ts:serverTimestamp()});
 SY.join=(bid,on)=>on?set(ref(db,`${ROOT}/joins/${bid}/${uid}`),{uid,who:ME.name,ts:serverTimestamp()}):remove(ref(db,`${ROOT}/joins/${bid}/${uid}`));
 SY.msg=(rid,text,img)=>push(ref(db,`${ROOT}/msgs/${rid}`),{...mine(),text:text||"",img:img||null,ts:serverTimestamp()});
 SY.delSeed=pid=>set(ref(db,`${ROOT}/deleted/${pid}`),true);
 SY.isSynced=rid=>SYNC_ROOMS.includes(rid)||String(rid).startsWith("rdm_");
 function ensureUser(id,v){ if(!id||id===uid) return "me"; const d=D.users[id]||{}; const f=v||{}; const name=d.name||f.name||f.who||(USERS["r_"+id]||{}).name||"メンバー";
   const main=Object.keys(R.gardens||{}).find(k=>R.gardens[k]==="main")||"umeda";
-  USERS["r_"+id]={name,ini:name[0],color:d.color||f.color||(USERS["r_"+id]||{}).color||"#8e8e93",g:main,h:"member_"+id.slice(1,7),bio:d.bio||"",pref:d.pref||"",city:d.city||"",uid:id,real:true,online:!!D.presence[id]};
+  USERS["r_"+id]={name,ini:name[0],pic:d.pic||null,color:d.color||f.color||(USERS["r_"+id]||{}).color||"#8e8e93",g:main,h:"member_"+id.slice(1,7),bio:d.bio||"",pref:d.pref||"",city:d.city||"",uid:id,real:true,online:!!D.presence[id]};
   return "r_"+id; }
 SY.ensureUser=ensureUser;
 SY.friendReq=to=>set(ref(db,`${ROOT}/freq/${to}/${uid}`),{uid,who:ME.name,ts:serverTimestamp()});
@@ -1635,7 +1979,8 @@ SY.uid=uid;
 SY.edit=(pid,{text,art,img})=>update(ref(db,`${ROOT}/posts/${pid}`),{text,art:art||"basket",img:img||null,edited:true});
 SY.del=pid=>update(ref(db,ROOT),{[`posts/${pid}`]:null,[`likes/${pid}`]:null,[`comments/${pid}`]:null});
 SY.saveMe=saveMe;
-SY.wipe=()=>update(ref(db,ROOT),{deleted:null,posts:null,likes:null,comments:null,joins:null,msgs:null,freq:null,friends:null});
+SY.saveState=st=>{ if(!db) return; clearTimeout(SY._st); SY._st=setTimeout(()=>set(ref(db,`${ROOT}/state/${uid}`),{json:JSON.stringify(st),ts:st.ts}).catch(()=>{}),1200); };
+SY.wipe=()=>update(ref(db,ROOT),{reads:null,calls:null,deleted:null,posts:null,likes:null,comments:null,joins:null,msgs:null,freq:null,friends:null});
 SY.afterReset=()=>{
   loadMe();
   if(!rooms.find(r=>r.id==="team")) rooms.unshift({id:"team",name:"発表チーム",ini:"🌱",color:"var(--tint)",members:1,unread:0,mids:[],custom:false,
@@ -1649,7 +1994,7 @@ SY.html=()=>{
   <div class="group">
     <div class="row"><span class="ico" style="--c:${connected?"var(--green)":"var(--gray)"}">${IC.people}</span><span class="grow">${connected?"接続中":"接続しています…"}<small>${connected?`オンライン ${online.length}人・投稿 / いいね / コメント / 参加 / チャットを共有`:"ネットに接続すると、ほかのスマホと同期します"}</small></span></div>
     ${online.length?`<div class="row" style="--inset:16px"><span class="stackav">${online.slice(0,6).map(o=>`<span class="av" style="--av:${o.color}">${esc(o.ini||"?")}</span>`).join("")}</span><span class="grow" style="font-size:14px;color:var(--label2)">${online.map(o=>esc(o.name)).join("、")}</span></div>`:""}
-    <button class="row" data-action="sy-name"><span class="grow">表示名</span><span class="val">${esc(ME.name)}</span>${IC.chev}</button>
+    <button class="row" data-action="sy-name"><span class="grow">表示名・アカウント</span><span class="val">${esc(ME.name)}</span>${IC.chev}</button>
     <button class="row danger" data-action="sy-wipe">共有データをリセット</button>
   </div>
   <p class="sec-f">発表の前に「共有データをリセット」を押すと、全員のスマホが最初の状態に戻ります。</p>`;
@@ -1659,15 +2004,21 @@ SY.html=()=>{
 function askName(force){
   if(!force && loadMe()) return;
   let color=ME.color&&COLORS.includes(ME.color)?ME.color:COLORS[Math.floor(Math.random()*COLORS.length)];
-  const body=()=>`<div class="g-prev" style="padding-top:18px"><span class="av" id="nmAv" style="--av:${color};background:${color}">${esc(($("#nmIn")?.value||ME.name||"？")[0])}</span>
+  const body=()=>`<div class="g-prev" style="padding-top:18px"><span class="av" id="nmAv" style="--av:${color};background:${color}">${esc(($("#nmIn")?.value||(force?ME.name:"")||"？")[0])}</span>
     <div class="emojis">${COLORS.map(c=>`<button class="${c===color?"on":""}" data-nmc="${c}" style="background:${c}" aria-label="色"></button>`).join("")}</div></div>
     <div class="group"><label class="row"><input class="inline" id="nmIn" style="text-align:left" placeholder="表示名（例：にべあ）" maxlength="12" value="${force?esc(ME.name):""}"></label></div>
-    <p class="sec-f">この名前で、ほかのメンバーのスマホに投稿やチャットが表示されます。</p>`;
+    <p class="sec-f">この名前で、ほかのメンバーのスマホに投稿やチャットが表示されます。</p>
+    ${(()=>{ const prev=Object.entries(D.users||{}).filter(([id])=>id!==uid); if(!prev.length) return "";
+      return `<div class="sec-h">以前このアプリを使っていた方</div><div class="group">${prev.map(([id,v])=>`<button class="row" style="--inset:62px" data-adopt="${id}"><span class="av" style="--av:${v.color||"#8e8e93"};background:${v.color||"#8e8e93"};width:38px;height:38px">${esc((v.name||"?")[0])}</span><span class="grow">${esc(v.name||"メンバー")}<small>${esc([v.pref,v.city].filter(Boolean).join(" ")||"このアカウントで続ける")}</small></span>${IC.chev}</button>`).join("")}</div>
+      <p class="sec-f">ホーム画面に追加し直したときなどは、ここから自分を選ぶと、フレンドやチャット、収穫記録をそのまま引き継げます。</p>`; })()}`;
   $("#formSheetBody").innerHTML=`<div class="grab"></div><div class="sh-nav"><span></span><b>${force?"表示名を変更":"ようこそ"}</b><button class="gbtn glass tinted r" id="nmOk" aria-label="決定">${IC.ok}</button></div><div class="sh-body" id="nmBody">${body()}</div>`;
   $("#formSheet").classList.add("open"); setSheeted(true);
-  $("#nmBody").addEventListener("click",e=>{ const b=e.target.closest("[data-nmc]"); if(!b) return; color=b.dataset.nmc; const v=$("#nmIn").value; $("#nmBody").innerHTML=body(); $("#nmIn").value=v; });
+  SY._nmRefresh=()=>{ const nb=$("#nmBody"); if(!nb||!$("#formSheet.open")) { SY._nmRefresh=null; return; } const v=$("#nmIn")?$("#nmIn").value:""; const f=document.activeElement&&document.activeElement.id==="nmIn"; nb.innerHTML=body(); $("#nmIn").value=v; if(f) $("#nmIn").focus(); };
+  $("#nmBody").addEventListener("click",e=>{ const ad=e.target.closest("[data-adopt]"); if(ad){ const id=ad.dataset.adopt, v=D.users[id]||{};
+      iosAlert(`「${v.name||"メンバー"}」として続けますか？`,"このスマホで、そのアカウントのフレンド・チャット・記録を引き継ぎます。",[{label:"キャンセル"},{label:"引き継ぐ",style:"main",fn:()=>{ try{ localStorage.setItem("farming-uid",id); localStorage.setItem("farming-me",JSON.stringify({name:v.name,color:v.color})); localStorage.removeItem("farming-state-v1"); if(v.pref) localStorage.setItem("farming-base",JSON.stringify({pref:v.pref,city:v.city||""})); if(v.bio!=null) localStorage.setItem("farming-bio",v.bio); }catch(e){} if(db) remove(ref(db,`${ROOT}/presence/${uid}`)); setTimeout(()=>location.reload(),200); }}]); return; }
+    const b=e.target.closest("[data-nmc]"); if(!b) return; color=b.dataset.nmc; const v=$("#nmIn").value; $("#nmBody").innerHTML=body(); $("#nmIn").value=v; });
   $("#nmBody").addEventListener("input",e=>{ if(e.target.id==="nmIn"){ const a=$("#nmAv"); if(a) a.textContent=(e.target.value||"？")[0]; } });
-  $("#nmOk").onclick=()=>{ const n=($("#nmIn").value||"").trim(); if(!n){ $("#nmIn").focus(); return; } ME.name=n; ME.ini=n[0]; ME.color=color; saveMe(); closeSheets(); refresh(); banner(`${n}さん、ようこそ！`); };
+  $("#nmOk").onclick=()=>{ const n=($("#nmIn").value||"").trim(); if(!n){ $("#nmIn").focus(); return; } ME.name=n; ME.ini=n[0]; ME.color=color; named=true; saveMe(); closeSheets(); refresh(); banner(`${n}さん、ようこそ！`); };
 }
 document.addEventListener("click",e=>{
   const el=e.target.closest("[data-action]"); if(!el) return;
@@ -1681,24 +2032,32 @@ try{
   SY.on=true; SY.afterReset();
   onValue(ref(db,".info/connected"),s=>{ connected=!!s.val(); if(connected){ const pr=ref(db,`${ROOT}/presence/${uid}`); onDisconnect(pr).remove(); saveMe(); } refresh(); });
   onValue(ref(db,`${ROOT}/presence`),s=>{ D.presence=s.val()||{}; apply(); refresh(); });
-  onValue(ref(db,`${ROOT}/users`),s=>{ D.users=s.val()||{}; apply(); refresh(); });
+  document.addEventListener("visibilitychange",()=>{ if(!db) return; if(document.visibilityState==="hidden") remove(ref(db,`${ROOT}/presence/${uid}`)); else { saveMe(); if(S.room&&pages.some(p=>p.key==="room")) markRead(S.room); } });
+  addEventListener("pagehide",()=>{ if(db) remove(ref(db,`${ROOT}/presence/${uid}`)); });
+  onValue(ref(db,`${ROOT}/reads`),s=>{ D.reads=s.val()||{}; const rp=pages.find(x=>x.key==="room"); if(rp&&SY.isSynced(S.room)) repaint("reads"); });
+  onValue(ref(db,`${ROOT}/users`),s=>{ D.users=s.val()||{}; apply(); refresh(); if(SY._askWhenUsers) setTimeout(SY._askWhenUsers,300); if(SY._nmRefresh) SY._nmRefresh(); });
   onValue(ref(db,`${ROOT}/freq`),s=>{ D.freq=s.val()||{}; notifyNew("freq/"+uid,D.freq[uid],(k,v)=>banner(`${v.who}さんからフレンド申請が届きました`,{page:"friends"})); apply(); refresh(); });
   onValue(ref(db,`${ROOT}/friends`),s=>{ D.friends=s.val()||{}; const before=new Set(R.friends); apply(); R.friends.filter(k=>String(k).startsWith("r_")&&!before.has(k)&&ready.friends).forEach(k=>banner(`${USERS[k].name}さんとフレンドになりました`,{user:k})); ready.friends=true; refresh(); });
-  onValue(ref(db,`${ROOT}/posts`),s=>{ D.posts=s.val()||{}; notifyNew("posts",D.posts,(k,v)=>banner(`${v.who}さんが投稿しました：${(v.text||"").slice(0,16)}`,{post:k})); repaint("posts"); });
+  onValue(ref(db,`${ROOT}/posts`),s=>{ D.posts=s.val()||{}; notifyNew("posts",D.posts,(k,v)=>banner(mentionsMe(v.text)?`${v.who}さんがあなたをメンションしました：${(v.text||"").slice(0,16)}`:`${v.who}さんが投稿しました：${(v.text||"").slice(0,16)}`,{post:k})); repaint("posts"); });
   onValue(ref(db,`${ROOT}/deleted`),s=>{ D.deleted=s.val()||{}; repaint("posts"); });
   onValue(ref(db,`${ROOT}/likes`),s=>{ D.likes=s.val()||{};
     Object.entries(D.likes).forEach(([pid,L])=>notifyNew("likes/"+pid,L,(k,v)=>{ const p=posts.find(x=>x.id==pid); if(p&&p.uid===uid) banner(`${v.who}さんがあなたの投稿にいいねしました`,{post:pid}); },"likes")); ready.likes=true;
     repaint("likes"); });
   onValue(ref(db,`${ROOT}/comments`),s=>{ D.comments=s.val()||{};
-    Object.entries(D.comments).forEach(([pid,C])=>notifyNew("comments/"+pid,C,(k,v)=>banner(`${v.who}さんがコメント：${(v.text||"").slice(0,18)}`,{post:pid,comment:true}),"comments")); ready.comments=true;
+    Object.entries(D.comments).forEach(([pid,C])=>notifyNew("comments/"+pid,C,(k,v)=>{ const p=posts.find(x=>x.id==pid); const mine=p&&isOwn(p); const pr=v.parent&&D.comments[pid]&&D.comments[pid][v.parent]; const toMe=pr&&pr.uid===uid;
+      banner(mentionsMe(v.text)?`${v.who}さんがあなたをメンションしました：${(v.text||"").slice(0,16)}`:toMe?`${v.who}さんがあなたのコメントに返信：${(v.text||"").slice(0,16)}`:mine?`${v.who}さんがあなたの投稿にコメント：${(v.text||"").slice(0,14)}`:`${v.who}さんがコメント：${(v.text||"").slice(0,18)}`,{post:pid,comment:true}); },"comments")); ready.comments=true;
     repaint("comments"); });
   onValue(ref(db,`${ROOT}/joins`),s=>{ D.joins=s.val()||{};
     Object.entries(D.joins).forEach(([bid,J])=>notifyNew("joins/"+bid,J,(k,v)=>{ const b=board.find(x=>x.id==bid); if(b) banner(`${v.who}さんが「${b.title}」に参加しました`,{board:bid}); },"joins")); ready.joins=true;
     repaint("joins"); });
   onValue(ref(db,`${ROOT}/msgs`),s=>{ D.msgs=s.val()||{};
-    Object.keys(D.msgs).filter(rid=>SYNC_ROOMS.includes(rid)||(rid.startsWith("rdm_")&&rid.split("_").slice(1).includes(uid))).forEach(rid=>notifyNew("msgs/"+rid,D.msgs[rid],(k,v)=>{ apply(); const r=rooms.find(x=>x.id===rid); if(!r) return; if(S.room!==rid){ r.unread=(r.unread||0)+1; { const tx=v.img&&!v.text?"📷 写真を送信しました":(v.text||""); banner(r.dm?`${v.who}：${tx.slice(0,22)}`:`${r.name}｜${v.who}：${tx.slice(0,18)}`,{room:rid}); } } },"msgs")); ready.msgs=true;
+    Object.keys(D.msgs).filter(rid=>SYNC_ROOMS.includes(rid)||(rid.startsWith("rdm_")&&rid.split("_").slice(1).includes(uid))).forEach(rid=>notifyNew("msgs/"+rid,D.msgs[rid],(k,v)=>{ apply(); const r=rooms.find(x=>x.id===rid); if(!r) return; if(S.room!==rid){ r.unread=(r.unread||0)+1; { const tx=(v.img&&!v.text?"📷 写真を送信しました":(v.text||""))+(mentionsMe(v.text)?"（メンション）":""); banner(r.dm?`${v.who}：${tx.slice(0,22)}`:`${r.name}｜${v.who}：${tx.slice(0,18)}`,{room:rid}); } } },"msgs")); ready.msgs=true;
     repaint("msgs"); });
-  setTimeout(()=>askName(false),600);
+  // クラウドに残した自分の状態（フレンド・チャット・収穫記録など）を復元
+  get(ref(db,`${ROOT}/state/${uid}`)).then(snap=>{ const v=snap.val(); if(!v||!v.json) return; let local=null; try{ local=JSON.parse(localStorage.getItem("farming-state-v1")||"null"); }catch(e){}
+    if(!local||(v.ts||0)>(local.ts||0)+2000){ try{ localStorage.setItem("farming-state-v1",v.json); }catch(e){} reset(true); } }).catch(()=>{});
+  let asked=false; const ask=()=>{ if(asked) return; asked=true; askName(false); };
+  SY._askWhenUsers=ask; setTimeout(ask,3500); listenIncoming();
   setInterval(()=>{ if(S.tab==="home" && !document.querySelector(".sheet-wrap.open")){ apply(); } },60000);
 }catch(err){ console.warn("sync disabled",err); SY.on=false; }
 </script>

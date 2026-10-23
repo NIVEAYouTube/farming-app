@@ -1,6 +1,6 @@
 {
-  "name": "Farming 農業コミュニティ",
-  "short_name": "Farming",
+  "name": "FarmingCommunity 農業コミュニティ",
+  "short_name": "FarmingCommunity",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
