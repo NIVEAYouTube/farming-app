@@ -218,7 +218,7 @@ body.nomotion *{transition:none!important;animation:none!important}
 .post img{-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none}
 .ctx{position:absolute;inset:0;z-index:92;opacity:0;pointer-events:none;transition:opacity .22s}
 .ctx.open{opacity:1;pointer-events:auto}
-.ctx-bg{position:absolute;inset:0;background:var(--dim);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.ctx-bg{position:absolute;inset:0;background:transparent}
 .ctx-card{position:absolute;border-radius:20px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.28);pointer-events:none;transform:scale(.95);transition:transform .4s cubic-bezier(.3,1.4,.4,1)}
 .ctx.open .ctx-card{transform:scale(1.03)}
 .ctx-card .post{border-radius:20px}
@@ -326,6 +326,22 @@ body.nomotion *{transition:none!important;animation:none!important}
 .cbtn.glass{--lg-fill:rgba(255,255,255,.18)}.cbtn.on{background:#fff;color:#000}
 .callb{width:50px;height:50px;flex:none;color:var(--tint)}
 .callb svg{width:22px;height:22px}
+.post.ctx-on{transform:scale(.97);transition:transform .25s}
+.ctx-menu{box-shadow:0 12px 40px rgba(0,0,0,.22),0 0 0 .5px rgba(0,0,0,.06)!important}
+.crop{position:absolute;inset:0;z-index:99;background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;opacity:0;pointer-events:none;transition:opacity .25s;padding-top:var(--st)}
+.crop.open{opacity:1;pointer-events:auto}
+.cr-nav,.cr-zoom,.cr-hint{position:relative;z-index:3}
+.cr-nav{background:rgba(0,0,0,.35);width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:12px 16px}
+.cr-nav b{font-size:16px;font-weight:600}.cr-nav button{font-size:17px;color:#fff;justify-self:start}.cr-nav .ok{justify-self:end;color:var(--tint);font-weight:600}
+.cr-stage{position:relative;width:min(340px,calc(100% - 32px));aspect-ratio:1;margin-top:40px;touch-action:none;overflow:visible;cursor:grab}
+.cr-stage img{position:absolute;left:0;top:0;max-width:none;user-select:none;-webkit-user-drag:none;transform-origin:0 0}
+.cr-mask{position:absolute;inset:0;z-index:2;pointer-events:none}
+.cr-ring{z-index:4}
+.cr-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);pointer-events:none}
+.crop{overflow:hidden}
+.cr-zoom{display:flex;align-items:center;gap:12px;width:min(300px,80%);margin-top:44px;font-size:18px;opacity:.85}
+.cr-zoom input{flex:1;accent-color:var(--tint)}
+.cr-hint{font-size:13px;opacity:.6;margin-top:16px;text-align:center;padding:0 30px}
 .search{margin:0 16px 14px;display:flex;align-items:center;gap:6px;background:var(--fill);border-radius:20px;padding:0 12px;height:40px;color:var(--label2)}
 .search svg{width:17px;height:17px;flex:none}
 .search input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:17px;color:var(--label)}
@@ -612,7 +628,8 @@ button.row:active,.crow:active{background:var(--press)}
     <div class="sheet-wrap" id="formSheet" data-action="close-sheet-bg"><div class="sheet" id="formSheetBody"></div></div>
     <div class="viewer" id="viewer" data-action="viewer-close"><img id="viewerImg" alt="写真"><button class="gbtn glass" data-action="viewer-close" aria-label="閉じる"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></button></div>
     <div class="mbox glass" id="mbox"></div>
-    <div class="call" id="call"></div><audio id="callAudio" autoplay playsinline></audio>
+    <div class="call" id="call"></div>
+    <div class="crop" id="crop"></div><audio id="callAudio" autoplay playsinline></audio>
     <div class="ctx" id="ctx"><div class="ctx-bg" data-action="ctx-close"></div><div class="ctx-card" id="ctxCard"></div><div class="ctx-menu glass" id="ctxMenu"></div></div>
     <div class="alert-wrap" id="alertWrap"><div class="alert glass" id="alertBox" role="alertdialog"></div></div>
     <div class="banner glass" id="banner" data-action="banner-go"><span class="appicon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 30V14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M32 21C24 21 18 15 17 7c9 0 14 5 15 14z" fill="#b6f0a0"/><path d="M32 19c8 0 14-6 15-14-9 0-14 5-15 14z" fill="#b6f0a0"/><path d="M8 42c8-4 15-4 22-1h11c3 0 3 5 0 5H30M8 54c14 1 24 1 35-6l14-10c3-2 1-6-3-5L41 41" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="bt"><b>FarmingCommunity</b><span id="bannerText"></span></div><time>今</time></div>
@@ -962,7 +979,7 @@ function chatList(){
   const list=rooms.filter(r=>!q||(r.name+r.msgs.map(m=>m.text).join("")).includes(q));
   if(!list.length) return `<div class="empty">「${esc(q)}」に一致するトークはありません</div>`;
   return `<div class="chatlist">${list.map(r=>{const last=r.msgs[r.msgs.length-1];return `<button class="crow" data-action="open-room" data-id="${r.id}">
-    <span class="unread ${r.unread?"on":""}"></span>${r.dm&&USERS[r.dm]?uav(r.dm):av(r.ini,r.color)}
+    <span class="unread ${r.unread?"on":""}"></span>${r.dm&&USERS[r.dm]?uav(r.dm):av(r.ini,r.color,r.pic)}
     <div class="c-main"><div class="c-top"><b>${esc(r.name)}</b><time>${esc(last?last.time:"")}</time>${IC.chev}</div><span class="c-prev">${esc(last?(()=>{ const tx=last.img&&!last.text?"📷 写真":last.text; return last.me?"あなた: "+tx:last.sys?tx:(r.dm?"":last.who+": ")+tx; })():"")}</span></div></button>`}).join("")}</div>`;
 }
 function chatHTML(){ return `<div class="lt"><h1>チャット</h1></div>${searchHTML("chat","トークを検索")}
@@ -1067,7 +1084,7 @@ function meHTML(){
     ${setRow(IC.help,"var(--gray)","ヘルプとお問い合わせ","help")}
   </div>
   <div class="group" style="margin-top:18px"><button class="row danger" data-action="logout">ログアウト</button></div>
-  <p class="ver">FarmingCommunity ver.2.0（10/23版・コンペ提案用プロトタイプ）</p>`;
+  <p class="ver">FarmingCommunity ver.2.1（10/23版・コンペ提案用プロトタイプ）</p>`;
 }
 /* ---------- 収穫・予定の入力シート ---------- */
 let F={}, E={};
@@ -1218,7 +1235,7 @@ const PAGES={
  groupinfo:{title:"グループ情報",body:()=>{
   const r=rooms.find(x=>x.id===S.room); if(!r) return "";
   const own=!!r.custom, mids=r.mids||[];
-  return `<div class="bigav">${av(r.ini,r.color)}${own?`<input class="g-rename" id="gRename" value="${esc(r.name)}" maxlength="20" aria-label="グループ名">`:`<b class="u-name">${esc(r.name)}</b>`}<span class="u-id">メンバー ${r.dm?2:(own?mids.length+1:r.members)}人</span></div>
+  return `<div class="bigav">${own?`<button class="avbtn" data-action="gavatar">${av(r.ini,r.color,r.pic)}<i>${IC.pencil}</i></button>`:av(r.ini,r.color,r.pic)}${own?`<input class="g-rename" id="gRename" value="${esc(r.name)}" maxlength="20" aria-label="グループ名">`:`<b class="u-name">${esc(r.name)}</b>`}<span class="u-id">メンバー ${r.dm?2:(own?mids.length+1:r.members)}人</span></div>
   <div class="sec-h">メンバー</div>
   <div class="group">
     ${own?`<button class="row" style="--inset:62px" data-action="add-members"><span class="pm add" style="width:40px;height:40px;margin:0"></span><span class="grow" style="color:var(--tint)">メンバーを追加</span></button>`:""}
@@ -1373,16 +1390,47 @@ function setReply(r){ S.replyTo=r; const bar=$("#replyBar"), inp=$("#cInput"); i
 const AV_TEMPL=["🌱","🍅","🥕","🌻","🍆","🥬","🌽","🍠","🐝","🐓","🧑‍🌾","👩‍🌾","🧺","🚜","🍀","🌾"];
 let AV={};
 function squareImage(file,cb){ const img=new Image(), url=URL.createObjectURL(file); img.onload=()=>{ const n=Math.min(img.width,img.height), c=document.createElement("canvas"); c.width=c.height=180; c.getContext("2d").drawImage(img,(img.width-n)/2,(img.height-n)/2,n,n,0,0,180,180); URL.revokeObjectURL(url); cb(c.toDataURL("image/jpeg",.82)); }; img.src=url; }
-function avBody(){ return `<div class="avprev">${av(ME.ini,AV.color,AV.pic).replace('class="av','class="av big')}</div>
+function avBody(){ return `<div class="avprev">${av(AV.ini,AV.color,AV.pic).replace('class="av','class="av big')}</div>
   <div class="sec-h" style="margin-top:2px">テンプレート</div>
-  <div class="group"><div class="avgrid"><button class="${!AV.pic?"on":""}" data-action="av-t" data-v="" style="--av:${AV.color}"><span>${esc(ME.ini)}</span></button>${AV_TEMPL.map(e=>`<button class="${AV.pic===e?"on":""}" data-action="av-t" data-v="${e}" style="--av:${AV.color}"><span>${e}</span></button>`).join("")}</div></div>
+  <div class="group"><div class="avgrid"><button class="${!AV.pic?"on":""}" data-action="av-t" data-v="" style="--av:${AV.color}"><span>${esc(AV.ini)}</span></button>${AV_TEMPL.map(e=>`<button class="${AV.pic===e?"on":""}" data-action="av-t" data-v="${e}" style="--av:${AV.color}"><span>${e}</span></button>`).join("")}</div></div>
   <div class="sec-h">背景の色</div>
   <div class="group"><div class="emojis" style="padding:12px">${AV_COLORS.concat(["#e8a317","#3b5a8c"]).map(c=>`<button class="${c===AV.color?"on":""}" data-action="av-c" data-v="${c}" style="background:${c}" aria-label="色"></button>`).join("")}</div></div>
   <div class="group" style="margin-top:18px"><label class="row" style="color:var(--tint)"><input type="file" accept="image/*" id="avFile" hidden><span class="ico" style="--c:var(--blue)">${IC.photo}</span><span class="grow">フォトライブラリから選ぶ</span>${IC.chev}</label></div>
   <p class="sec-f">GIF画像を選ぶと、アイコンが動きます。</p>`; }
+/* ---- 写真の切り抜き（ドラッグで移動・ピンチ/スライダーで拡大） ---- */
+let CR=null;
+function openCrop(file,done){
+  const url=URL.createObjectURL(file), img=new Image();
+  img.onload=()=>{
+    const el=$("#crop"); el.innerHTML=`<div class="cr-nav"><button data-action="crop-cancel">キャンセル</button><b>移動と拡大・縮小</b><button class="ok" data-action="crop-ok">完了</button></div>
+      <div class="cr-stage" id="crStage"><img id="crImg" src="${url}" alt="" draggable="false"><div class="cr-ring"></div></div><div class="cr-mask" id="crMask"></div>
+      <div class="cr-zoom"><span>－</span><input type="range" id="crZoom" min="1" max="4" step="0.01" value="1" aria-label="拡大・縮小"><span>＋</span></div>
+      <p class="cr-hint">写真をドラッグして位置を合わせ、2本の指かスライダーで拡大できます</p>`;
+    el.classList.add("open");
+    const st=$("#crStage"), D=st.clientWidth, min=Math.max(D/img.width,D/img.height); { const cr=el.getBoundingClientRect(), sr=st.getBoundingClientRect(); $("#crMask").style.background=`radial-gradient(circle at ${sr.left-cr.left+D/2}px ${sr.top-cr.top+D/2}px, transparent ${D/2-.5}px, rgba(0,0,0,.7) ${D/2}px)`; }
+    CR={img,url,done,D,min,s:min,x:(D-img.width*min)/2,y:(D-img.height*min)/2,pts:new Map()};
+    crDraw();
+    $("#crZoom").addEventListener("input",e=>crZoomTo(min*parseFloat(e.target.value),D/2,D/2));
+    st.addEventListener("pointerdown",e=>{ st.setPointerCapture(e.pointerId); CR.pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); if(CR.pts.size===2) CR.pinch=crPinch(); });
+    st.addEventListener("pointermove",e=>{ if(!CR||!CR.pts.has(e.pointerId)) return; const prev=CR.pts.get(e.pointerId); CR.pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(CR.pts.size===1){ CR.x+=e.clientX-prev.x; CR.y+=e.clientY-prev.y; crDraw(); }
+      else if(CR.pts.size===2&&CR.pinch){ const n=crPinch(), r=st.getBoundingClientRect(); crZoomTo(CR.s*n.d/CR.pinch.d,n.cx-r.left,n.cy-r.top); CR.x+=n.cx-CR.pinch.cx; CR.y+=n.cy-CR.pinch.cy; crDraw(); CR.pinch=n; } });
+    const up=e=>{ if(!CR) return; CR.pts.delete(e.pointerId); CR.pinch=CR.pts.size===2?crPinch():null; };
+    st.addEventListener("pointerup",up); st.addEventListener("pointercancel",up);
+    st.addEventListener("wheel",e=>{ e.preventDefault(); const r=st.getBoundingClientRect(); crZoomTo(CR.s*(e.deltaY<0?1.08:.93),e.clientX-r.left,e.clientY-r.top); },{passive:false});
+  };
+  img.src=url;
+}
+function crPinch(){ const [a,b]=[...CR.pts.values()]; return {d:Math.hypot(a.x-b.x,a.y-b.y)||1,cx:(a.x+b.x)/2,cy:(a.y+b.y)/2}; }
+function crZoomTo(ns,cx,cy){ ns=Math.max(CR.min,Math.min(CR.min*4,ns)); const k=ns/CR.s; CR.x=cx-(cx-CR.x)*k; CR.y=cy-(cy-CR.y)*k; CR.s=ns; const z=$("#crZoom"); if(z) z.value=(ns/CR.min).toFixed(2); crDraw(); }
+function crDraw(){ const {img,D}=CR, w=img.width*CR.s, h=img.height*CR.s; CR.x=Math.min(0,Math.max(D-w,CR.x)); CR.y=Math.min(0,Math.max(D-h,CR.y));
+  const im=$("#crImg"); im.style.width=w+"px"; im.style.height=h+"px"; im.style.transform=`translate(${CR.x}px,${CR.y}px)`; }
+function closeCrop(){ $("#crop").classList.remove("open"); if(CR){ URL.revokeObjectURL(CR.url); CR=null; } }
+function finishCrop(){ const {img,D,s,x,y,done}=CR, c=document.createElement("canvas"); c.width=c.height=240;
+  c.getContext("2d").drawImage(img,-x/s,-y/s,D/s,D/s,0,0,240,240); const d=c.toDataURL("image/jpeg",.85); closeCrop(); done(d); }
 function avRefresh(){ const b=$("#formBody"); if(b) b.innerHTML=avBody(); }
-function openAvatar(){ AV={pic:ME.pic||null,color:ME.color};
-  $("#formSheetBody").innerHTML=`<div class="grab"></div><div class="sh-nav"><button class="gbtn glass" data-action="close-sheet" aria-label="キャンセル">${IC.x}</button><b>アイコンを編集</b><button class="gbtn glass tinted r" data-action="av-save" aria-label="保存">${IC.ok}</button></div><div class="sh-body" id="formBody">${avBody()}</div>`;
+function openAvatar(room){ const r=room&&rooms.find(x=>x.id===room); AV=r?{room,pic:r.pic||(r.ini&&!/^[\u3040-\u30ff\u4e00-\u9fffA-Za-z0-9]$/.test(r.ini)?r.ini:null),color:r.color&&r.color.startsWith("#")?r.color:"#2bb5b0",ini:(r.name||"G")[0]}:{pic:ME.pic||null,color:ME.color,ini:ME.ini};
+  $("#formSheetBody").innerHTML=`<div class="grab"></div><div class="sh-nav"><button class="gbtn glass" data-action="close-sheet" aria-label="キャンセル">${IC.x}</button><b>${AV.room?"グループのアイコン":"アイコンを編集"}</b><button class="gbtn glass tinted r" data-action="av-save" aria-label="保存">${IC.ok}</button></div><div class="sh-body" id="formBody">${avBody()}</div>`;
   $("#formSheet").classList.add("open"); setSheeted(true); }
 function renameMine(){ posts.forEach(p=>{ if(p.own){ p.who=ME.name; p.ini=ME.ini; p.color=ME.color; p.pic=ME.pic; } (p.comments||[]).forEach(c=>{ if(c&&c.mine){ c.who=ME.name; c.ini=ME.ini; c.color=ME.color; c.pic=ME.pic; } }); }); }
 function openPost(id){
@@ -1436,21 +1484,20 @@ function openCtx(id,src,fromSheet){
   const menu=$("#ctxMenu"), card=$("#ctxCard");
   menu.innerHTML=(isOwn(p)?`<div class="ctx-h">自分の投稿</div>`:"")+items.map(([k,l,ic,c])=>`<button class="${c||""}" data-action="ctx-do" data-v="${k}"><span>${l}</span>${ic}</button>`).join("");
   const menuH=items.length*50+(isOwn(p)?34:0)+12;
-  card.innerHTML="";
+  card.innerHTML=""; card.style.display="none";
   if(!fromSheet){
-    const clone=src.cloneNode(true); clone.classList.remove("new"); clone.style.visibility="visible"; card.appendChild(clone);
-    const cardH=Math.min(r.height,H-menuH-150), top=Math.max(64,Math.min(r.top-appR.top,H-cardH-menuH-36));
-    Object.assign(card.style,{display:"block",left:(r.left-appR.left)+"px",top:top+"px",width:r.width+"px",height:cardH+"px"});
-    const left=Math.min(Math.max(12,r.left-appR.left),W-262);
-    Object.assign(menu.style,{left:left+"px",top:(top+cardH+12)+"px",transformOrigin:(left<W/2?"left":"right")+" top"});
-    src.style.visibility="hidden"; S.ctxSrc=src;
+    const px=(lpX||r.left+r.width/2)-appR.left, py=(lpY||r.top+r.height/2)-appR.top;
+    const left=Math.min(Math.max(12,px-125),W-262); let top=py+14, org="top";
+    if(top+menuH>H-96){ top=Math.max(60,py-menuH-14); org="bottom"; }
+    Object.assign(menu.style,{left:left+"px",top:top+"px",transformOrigin:`${Math.max(10,Math.min(240,px-left))}px ${org}`});
+    src.classList.add("ctx-on"); S.ctxSrc=src;
   } else {
     card.style.display="none";
     Object.assign(menu.style,{left:Math.max(12,r.right-appR.left-250)+"px",top:(r.bottom-appR.top+8)+"px",transformOrigin:"right top"});
   }
   S.ctxId=p.id; $("#ctx").classList.add("open"); if(navigator.vibrate) navigator.vibrate(12);
 }
-function closeCtx(){ $("#ctx").classList.remove("open"); if(S.ctxSrc){ const el=S.ctxSrc; setTimeout(()=>el.style.visibility="",180); S.ctxSrc=null; } }
+function closeCtx(){ $("#ctx").classList.remove("open"); if(S.ctxSrc){ S.ctxSrc.classList.remove("ctx-on"); S.ctxSrc=null; } }
 function deletePost(id){
   const p=posts.find(x=>x.id==id); if(!p) return;
   if(S.openPost!=null&&S.openPost==id) closeSheets();
@@ -1514,7 +1561,7 @@ function msgHTML(m,isNew){
   return `<div class="msg ${isNew?"in":""}">${av(m.ini,m.color,m.pic)}<div><div class="who">${esc(m.who)}</div><div class="${cls}">${inner}</div></div></div>`;
 }
 function rwho(r){ const x=r.dm&&USERS[r.dm]; const st=x&&x.real?`<small class="rst ${x.online?"on":""}">${x.online?"● オンライン":"オフライン"}</small>`:r.mids&&!r.dm&&r.id==="team"?`<small class="rst">オンライン ${Math.max(1,r.members||1)}人</small>`:"";
-  return `${x?uav(r.dm):av(r.ini,r.color)}<span class="nm glass">${esc(r.name)} ›</span>${st}`; }
+  return `${x?uav(r.dm):av(r.ini,r.color,r.pic)}<span class="nm glass">${esc(r.name)} ›</span>${st}`; }
 function roomHTML(){
   const r=rooms.find(x=>x.id===S.room);
   return `<div class="pg-nav room-nav"><button class="gbtn glass" data-action="pop" aria-label="戻る">${IC.back}</button>
@@ -1637,7 +1684,7 @@ $("#app").addEventListener("touchcancel",()=>{ lpCancel(); lpFired=false; });
 $("#app").addEventListener("mousedown",e=>{ if(e.button!==0) return; const post=e.target.closest(".post"); if(!post||e.target.closest(".like")) return; lpStart(post,e.clientX,e.clientY); });
 $("#app").addEventListener("mousemove",e=>{ if(lpT&&Math.hypot(e.clientX-lpX,e.clientY-lpY)>10) lpCancel(); });
 $("#app").addEventListener("mouseup",lpCancel);
-$("#app").addEventListener("contextmenu",e=>{ const post=e.target.closest(".post"); if(!post) return; e.preventDefault(); lpCancel(); lpFired=false; lpSuppress=Date.now()+400; openCtx(post.dataset.id,post); });
+$("#app").addEventListener("contextmenu",e=>{ const post=e.target.closest(".post"); if(!post) return; e.preventDefault(); lpCancel(); lpX=e.clientX; lpY=e.clientY; lpFired=false; lpSuppress=Date.now()+400; openCtx(post.dataset.id,post); });
 $("#app").addEventListener("click",e=>{
   if(Date.now()<lpSuppress&&!e.target.closest("#ctx")){ lpSuppress=0; lpFired=false; e.preventDefault(); return; }
   const el=e.target.closest("[data-action]"); if(!el||el.disabled) return;
@@ -1673,7 +1720,7 @@ $("#app").addEventListener("click",e=>{
     case "ng-pick": { const u=el.dataset.u; NG.sel=NG.sel.includes(u)?NG.sel.filter(x=>x!==u):[...NG.sel,u]; ngRefresh(); break; }
     case "ng-save": { if(!NG.sel.length) break; const names=NG.sel.map(u=>USERS[u].name);
       if(NG.mode==="new"){ const id="g"+(R.gid++); const name=NG.name.trim()||[ME.name.split(" ")[0],...names].join("、");
-        rooms.unshift({id,name,ini:NG.emoji,color:"var(--tint)",members:NG.sel.length+1,unread:0,custom:true,mids:[...NG.sel],msgs:[{sys:true,text:`${ME.name}さんがグループ「${name}」を作成しました`,time:nowTime()},{sys:true,text:`${names.join("さん、")}さんが参加しました`,time:nowTime()}]});
+        rooms.unshift({id,name,ini:NG.emoji,pic:NG.emoji,color:"#2bb5b0",members:NG.sel.length+1,unread:0,custom:true,mids:[...NG.sel],msgs:[{sys:true,text:`${ME.name}さんがグループ「${name}」を作成しました`,time:nowTime()},{sys:true,text:`${names.join("さん、")}さんが参加しました`,time:nowTime()}]});
         closeSheets(); if(S.tab!=="chat"){S.tab="chat";} refresh(); setTimeout(()=>openRoom(id),350); }
       else { const r=rooms.find(x=>x.id===NG.room); r.mids.push(...NG.sel); r.members=r.mids.length+1; r.msgs.push({sys:true,text:`${names.join("さん、")}さんを追加しました`,time:nowTime()});
         closeSheets(); refresh(); const rp=pages.find(p=>p.key==="room"); if(rp){ const box=rp.el.querySelector(".msgs"); box.insertAdjacentHTML("beforeend",msgHTML(r.msgs[r.msgs.length-1],true)); box.scrollTop=box.scrollHeight; } banner(`${names.length}人をグループに追加しました`); }
@@ -1693,9 +1740,13 @@ $("#app").addEventListener("click",e=>{
     case "choose": put(el.dataset.key,el.dataset.val); refresh(); break;
     case "theme": SET.theme=v; applyTheme(); refresh(); break;
     case "avcolor": openAvatar(); break;
+    case "gavatar": openAvatar(S.room); break;
+    case "crop-cancel": closeCrop(); break;
+    case "crop-ok": if(CR) finishCrop(); break;
     case "av-t": AV.pic=v||null; avRefresh(); break;
     case "av-c": AV.color=v; avRefresh(); break;
-    case "av-save": ME.pic=AV.pic; ME.color=AV.color; try{ if(ME.pic) localStorage.setItem("farming-pic",ME.pic); else localStorage.removeItem("farming-pic"); }catch(_){}
+    case "av-save": if(AV.room){ const r=rooms.find(x=>x.id===AV.room); if(r){ r.pic=AV.pic; r.color=AV.color; r.ini=AV.ini; } closeSheets(); refresh(); setTimeout(()=>banner("グループのアイコンを変更しました"),300); break; }
+      ME.pic=AV.pic; ME.color=AV.color; try{ if(ME.pic) localStorage.setItem("farming-pic",ME.pic); else localStorage.removeItem("farming-pic"); }catch(_){}
       renameMine(); if(SY.saveMe) SY.saveMe(); closeSheets(); refresh(); setTimeout(()=>banner("アイコンを変更しました"),300); break;
     case "reply": { const c=el.dataset.cid; setReply({id:c,who:el.dataset.who}); break; }
     case "reply-cancel": { const inp=$("#cInput"); if(inp&&S.replyTo&&inp.value.startsWith("@"+S.replyTo.who+" ")) inp.value=inp.value.slice(S.replyTo.who.length+2); setReply(null); break; }
@@ -1779,7 +1830,7 @@ $("#app").addEventListener("change",e=>{
   if(e.target.dataset&&e.target.dataset.field){ saveBase(); renameMine(); if(SY.saveMe) SY.saveMe(); }
   if(e.target.classList&&e.target.classList.contains("chatFile")&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; resizeImage(f,sendChatImage); return; }
   if(e.target.id==="upFile"&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; resizeImage(f,d=>{ composeImg=d; $("#upPrev").innerHTML=`<img src="${d}" alt="">`; document.querySelectorAll(".pick button").forEach(b=>b.classList.remove("on")); }); return; }
-  if(e.target.id==="avFile"&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; const done=d=>{ AV.pic=d; avRefresh(); }; if(f.type==="image/gif"&&f.size<700000) resizeImage(f,done); else squareImage(f,done); return; } if(e.target.dataset.field||e.target.id==="gRename") refresh(); });
+  if(e.target.id==="avFile"&&e.target.files[0]){ const f=e.target.files[0]; e.target.value=""; const done=d=>{ AV.pic=d; avRefresh(); }; if(f.type==="image/gif"&&f.size<700000) resizeImage(f,done); else openCrop(f,done); return; } if(e.target.dataset.field||e.target.id==="gRename") refresh(); });
 document.addEventListener("focusout",e=>{ if(S&&S.pendingRefresh&&/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ setTimeout(()=>{ const ae=document.activeElement; if(!(ae&&/^(INPUT|TEXTAREA)$/.test(ae.tagName))){ S.pendingRefresh=false; refresh(); } },60); } });
 $("#app").addEventListener("keydown",e=>{
   if(e.key!=="Enter"||e.isComposing) return;
