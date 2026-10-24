@@ -327,6 +327,7 @@ body.nomotion *{transition:none!important;animation:none!important}
 .cbtn.glass{--lg-fill:rgba(255,255,255,.18)}.cbtn.on{background:#fff;color:#000}
 .callb{width:50px;height:50px;flex:none;color:var(--tint)}
 .callb svg{width:22px;height:22px}
+.mimg{-webkit-user-drag:none}
 .msg.ctx-on .bub{transform:scale(1.04);box-shadow:0 6px 20px rgba(0,0,0,.18);transition:transform .2s}
 .msg.pressing .bub{transform:scale(.96);transition:transform .45s}
 .msgs .msg{-webkit-touch-callout:none;user-select:none}
@@ -1120,7 +1121,7 @@ function meHTML(){
     ${setRow(IC.help,"var(--gray)","ヘルプとお問い合わせ","help")}
   </div>
   <div class="group" style="margin-top:18px"><button class="row danger" data-action="logout">ログアウト</button></div>
-  <p class="ver">FarmingCommunity ver.2.4（10/23版・コンペ提案用プロトタイプ）</p>`;
+  <p class="ver">FarmingCommunity ver.2.5（10/23版・コンペ提案用プロトタイプ）</p>`;
 }
 /* ---------- 収穫・予定の入力シート ---------- */
 let F={}, E={};
@@ -1539,13 +1540,14 @@ function openMsgCtx(el){
   const hit=msgAt(el); if(!hit) return; const {r,idx,m}=hit;
   const appR=$("#app").getBoundingClientRect(), W=appR.width, H=appR.height;
   const items=[]; if(m.text) items.push(["copy","コピー",IC.copy]);
-  items.push(["del",m.me?(SY.on&&SY.isSynced&&SY.isSynced(r.id)?"送信を取り消す":"削除"):"削除",IC.trash,"red"]);
+  if(m.img) items.push(["save","写真を表示",IC.photo]);
+  items.push(["del",m.me?(SY.on&&SY.isSynced&&SY.isSynced(r.id)?(m.img&&!m.text?"写真の送信を取り消す":"送信を取り消す"):"削除"):"削除",IC.trash,"red"]);
   const menu=$("#ctxMenu"); $("#ctxCard").style.display="none";
   menu.innerHTML=items.map(([k,l,ic,c])=>`<button class="${c||""}" data-action="mctx" data-v="${k}"><span>${l}</span>${ic}</button>`).join("");
   const menuH=items.length*50+12, px=(lpX||appR.left+W/2)-appR.left, py=(lpY||appR.top+H/2)-appR.top;
   const left=m.me?Math.max(12,Math.min(W-262,px-200)):Math.min(Math.max(12,px-40),W-262); let top=py+14, org="top"; if(top+menuH>H-90){ top=Math.max(60,py-menuH-14); org="bottom"; }
   Object.assign(menu.style,{left:left+"px",top:top+"px",transformOrigin:`${m.me?"right":"left"} ${org}`});
-  el.classList.add("ctx-on"); S.ctxSrc=el; S.ctxId=null; S.ctxMsg={rid:r.id,idx,id:m.id||null,me:!!m.me,text:m.text||""}; S.ctxAt=Date.now(); $("#ctx").classList.add("open"); if(navigator.vibrate) navigator.vibrate(12);
+  el.classList.add("ctx-on"); S.ctxSrc=el; S.ctxId=null; S.ctxMsg={rid:r.id,idx,id:m.id||null,me:!!m.me,text:m.text||"",img:m.img||null}; S.ctxAt=Date.now(); $("#ctx").classList.add("open"); if(navigator.vibrate) navigator.vibrate(12);
 }
 function repaintRoomBox(){ const rp=pages.find(x=>x.key==="room"); const r=rooms.find(x=>x.id===S.room); if(!rp||!r) return;
   if(SY.on&&SY.isSynced&&SY.isSynced(r.id)&&SY.repaintRoom){ SY.repaintRoom(); return; }
@@ -1554,7 +1556,7 @@ function deleteMsg(c){
   const r=rooms.find(x=>x.id===c.rid); if(!r) return; const synced=SY.on&&SY.isSynced&&SY.isSynced(r.id);
   if(synced&&c.id){ if(c.me) SY.delMsg(r.id,c.id); else { R.hiddenMsgs=R.hiddenMsgs||{}; (R.hiddenMsgs[r.id]=R.hiddenMsgs[r.id]||[]).push(c.id); if(SY.refreshNow) SY.refreshNow(); repaintRoomBox(); } }
   else { const i=r.msgs.findIndex((m,j)=>j===c.idx); if(i>=0) r.msgs.splice(i,1); repaintRoomBox(); }
-  setTimeout(()=>banner(synced&&c.me?"送信を取り消しました":"メッセージを削除しました"),200); refresh();
+  setTimeout(()=>banner(synced&&c.me?(c.img&&!c.text?"写真の送信を取り消しました":"送信を取り消しました"):(c.img&&!c.text?"写真を削除しました":"メッセージを削除しました")),200); refresh();
 }
 function closeCtx(){ S.ctxMsg=null; $("#ctx").classList.remove("open"); if(S.ctxSrc){ S.ctxSrc.classList.remove("ctx-on"); S.ctxSrc=null; } }
 function deletePost(id){
@@ -1736,11 +1738,11 @@ let lpT=null,lpX=0,lpY=0,lpFired=false,lpSuppress=0;
 function lpStart(post,x,y){ lpCancel(); lpX=x; lpY=y; lpFired=false; post.classList.add("pressing");
   lpT=setTimeout(()=>{ lpT=null; lpFired=true; lpSuppress=Date.now()+700; post.classList.remove("pressing"); if(post.classList.contains("msg")) openMsgCtx(post); else openCtx(post.dataset.id,post); },480); }
 function lpCancel(){ if(lpT){ clearTimeout(lpT); lpT=null; } document.querySelectorAll(".post.pressing").forEach(p=>p.classList.remove("pressing")); }
-$("#app").addEventListener("touchstart",e=>{ const post=e.target.closest(".post,.msgs .msg:not(.typingRow)"); if(!post||e.target.closest(".like,.mimg")||e.touches.length>1) return; lpStart(post,e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
+$("#app").addEventListener("touchstart",e=>{ const post=e.target.closest(".post,.msgs .msg:not(.typingRow)"); if(!post||e.target.closest(".like")||e.touches.length>1) return; lpStart(post,e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
 $("#app").addEventListener("touchmove",e=>{ if(lpT&&Math.hypot(e.touches[0].clientX-lpX,e.touches[0].clientY-lpY)>10) lpCancel(); },{passive:true});
 $("#app").addEventListener("touchend",e=>{ lpCancel(); const justOpened=Date.now()-(S.ctxAt||0)<700; if(lpFired||justOpened){ lpFired=false; lpSuppress=Date.now()+700; if(e.cancelable) e.preventDefault(); } },{passive:false});
 $("#app").addEventListener("touchcancel",()=>{ lpCancel(); lpFired=false; });
-$("#app").addEventListener("mousedown",e=>{ if(e.button!==0) return; const post=e.target.closest(".post,.msgs .msg:not(.typingRow)"); if(!post||e.target.closest(".like,.mimg")) return; lpStart(post,e.clientX,e.clientY); });
+$("#app").addEventListener("mousedown",e=>{ if(e.button!==0) return; const post=e.target.closest(".post,.msgs .msg:not(.typingRow)"); if(!post||e.target.closest(".like")) return; lpStart(post,e.clientX,e.clientY); });
 $("#app").addEventListener("mousemove",e=>{ if(lpT&&Math.hypot(e.clientX-lpX,e.clientY-lpY)>10) lpCancel(); });
 $("#app").addEventListener("mouseup",lpCancel);
 $("#app").addEventListener("contextmenu",e=>{ const post=e.target.closest(".post,.msgs .msg:not(.typingRow)"); if(!post) return; e.preventDefault(); if(lpFired||$("#ctx").classList.contains("open")) return; lpCancel(); lpX=e.clientX; lpY=e.clientY; lpFired=false; lpSuppress=Date.now()+400; if(post.classList.contains("msg")) openMsgCtx(post); else openCtx(post.dataset.id,post); });
@@ -1843,9 +1845,10 @@ $("#app").addEventListener("click",e=>{
     case "post-more": openCtx(id,el,true); break;
     case "ctx-close": if(Date.now()-(S.ctxAt||0)<700) break; closeCtx(); break;
     case "mctx": { if(Date.now()-(S.ctxAt||0)<350) break; const c=S.ctxMsg; closeCtx(); if(!c) break;
+      if(v==="save"&&c.img){ $("#viewerImg").src=c.img; $("#viewer").classList.add("open"); }
       if(v==="copy"){ try{ navigator.clipboard.writeText(c.text).then(()=>banner("コピーしました"),()=>banner("コピーできませんでした")); }catch(_){ banner("コピーできませんでした"); } }
       if(v==="del"){ const synced=SY.on&&SY.isSynced&&SY.isSynced(c.rid);
-        iosAlert(synced&&c.me?"送信を取り消しますか？":"このメッセージを削除しますか？", synced&&c.me?"メンバー全員のトークから削除されます。":synced?"あなたの画面からのみ削除されます。":"このトークから削除されます。",[{label:"キャンセル"},{label:synced&&c.me?"取り消す":"削除",style:"red",fn:()=>deleteMsg(c)}]); }
+        iosAlert(synced&&c.me?(c.img&&!c.text?"写真の送信を取り消しますか？":"送信を取り消しますか？"):(c.img&&!c.text?"この写真を削除しますか？":"このメッセージを削除しますか？"), synced&&c.me?"メンバー全員のトークから削除されます。":synced?"あなたの画面からのみ削除されます。":"このトークから削除されます。",[{label:"キャンセル"},{label:synced&&c.me?"取り消す":"削除",style:"red",fn:()=>deleteMsg(c)}]); }
       break; }
     case "ctx-do": { if(Date.now()-(S.ctxAt||0)<350) break; const pid=S.ctxId, p=posts.find(x=>x.id==pid); closeCtx(); if(!p) break;
       if(v==="edit"){ const wasOpen=document.querySelector("#postSheet.open"); if(wasOpen) closeSheets(); setTimeout(()=>openCompose(p),wasOpen?380:120); }
