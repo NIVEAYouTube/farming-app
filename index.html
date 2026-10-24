@@ -1084,7 +1084,7 @@ function meHTML(){
     ${setRow(IC.help,"var(--gray)","ヘルプとお問い合わせ","help")}
   </div>
   <div class="group" style="margin-top:18px"><button class="row danger" data-action="logout">ログアウト</button></div>
-  <p class="ver">FarmingCommunity ver.2.1（10/23版・コンペ提案用プロトタイプ）</p>`;
+  <p class="ver">FarmingCommunity ver.2.2（10/23版・コンペ提案用プロトタイプ）</p>`;
 }
 /* ---------- 収穫・予定の入力シート ---------- */
 let F={}, E={};
@@ -1495,7 +1495,7 @@ function openCtx(id,src,fromSheet){
     card.style.display="none";
     Object.assign(menu.style,{left:Math.max(12,r.right-appR.left-250)+"px",top:(r.bottom-appR.top+8)+"px",transformOrigin:"right top"});
   }
-  S.ctxId=p.id; $("#ctx").classList.add("open"); if(navigator.vibrate) navigator.vibrate(12);
+  S.ctxId=p.id; S.ctxAt=Date.now(); $("#ctx").classList.add("open"); if(navigator.vibrate) navigator.vibrate(12);
 }
 function closeCtx(){ $("#ctx").classList.remove("open"); if(S.ctxSrc){ S.ctxSrc.classList.remove("ctx-on"); S.ctxSrc=null; } }
 function deletePost(id){
@@ -1679,14 +1679,14 @@ function lpStart(post,x,y){ lpCancel(); lpX=x; lpY=y; lpFired=false; post.classL
 function lpCancel(){ if(lpT){ clearTimeout(lpT); lpT=null; } document.querySelectorAll(".post.pressing").forEach(p=>p.classList.remove("pressing")); }
 $("#app").addEventListener("touchstart",e=>{ const post=e.target.closest(".post"); if(!post||e.target.closest(".like")||e.touches.length>1) return; lpStart(post,e.touches[0].clientX,e.touches[0].clientY); },{passive:true});
 $("#app").addEventListener("touchmove",e=>{ if(lpT&&Math.hypot(e.touches[0].clientX-lpX,e.touches[0].clientY-lpY)>10) lpCancel(); },{passive:true});
-$("#app").addEventListener("touchend",e=>{ lpCancel(); if(lpFired){ lpFired=false; if(e.cancelable) e.preventDefault(); } },{passive:false});
+$("#app").addEventListener("touchend",e=>{ lpCancel(); const justOpened=Date.now()-(S.ctxAt||0)<700; if(lpFired||justOpened){ lpFired=false; lpSuppress=Date.now()+700; if(e.cancelable) e.preventDefault(); } },{passive:false});
 $("#app").addEventListener("touchcancel",()=>{ lpCancel(); lpFired=false; });
 $("#app").addEventListener("mousedown",e=>{ if(e.button!==0) return; const post=e.target.closest(".post"); if(!post||e.target.closest(".like")) return; lpStart(post,e.clientX,e.clientY); });
 $("#app").addEventListener("mousemove",e=>{ if(lpT&&Math.hypot(e.clientX-lpX,e.clientY-lpY)>10) lpCancel(); });
 $("#app").addEventListener("mouseup",lpCancel);
-$("#app").addEventListener("contextmenu",e=>{ const post=e.target.closest(".post"); if(!post) return; e.preventDefault(); lpCancel(); lpX=e.clientX; lpY=e.clientY; lpFired=false; lpSuppress=Date.now()+400; openCtx(post.dataset.id,post); });
+$("#app").addEventListener("contextmenu",e=>{ const post=e.target.closest(".post"); if(!post) return; e.preventDefault(); if(lpFired||$("#ctx").classList.contains("open")) return; lpCancel(); lpX=e.clientX; lpY=e.clientY; lpFired=false; lpSuppress=Date.now()+400; openCtx(post.dataset.id,post); });
 $("#app").addEventListener("click",e=>{
-  if(Date.now()<lpSuppress&&!e.target.closest("#ctx")){ lpSuppress=0; lpFired=false; e.preventDefault(); return; }
+  if(Date.now()<lpSuppress&&!(e.target.closest("#ctxMenu")&&Date.now()-(S.ctxAt||0)>350)){ lpSuppress=0; lpFired=false; e.preventDefault(); return; }
   const el=e.target.closest("[data-action]"); if(!el||el.disabled) return;
   const a=el.dataset.action, id=el.dataset.id, v=el.dataset.v;
   switch(a){
@@ -1782,8 +1782,8 @@ $("#app").addEventListener("click",e=>{
     case "viewer-close": $("#viewer").classList.remove("open"); break;
     case "base-pref": SET.base.pref=v; saveBase(); if(SY.saveMe) SY.saveMe(); refresh(); setTimeout(popPage,150); break;
     case "post-more": openCtx(id,el,true); break;
-    case "ctx-close": closeCtx(); break;
-    case "ctx-do": { const pid=S.ctxId, p=posts.find(x=>x.id==pid); closeCtx(); if(!p) break;
+    case "ctx-close": if(Date.now()-(S.ctxAt||0)<700) break; closeCtx(); break;
+    case "ctx-do": { if(Date.now()-(S.ctxAt||0)<350) break; const pid=S.ctxId, p=posts.find(x=>x.id==pid); closeCtx(); if(!p) break;
       if(v==="edit"){ const wasOpen=document.querySelector("#postSheet.open"); if(wasOpen) closeSheets(); setTimeout(()=>openCompose(p),wasOpen?380:120); }
       if(v==="delete") iosAlert("この投稿を削除しますか？",SY.on?"削除すると元に戻せません。ほかのメンバーの画面からも消えます。":"削除すると元に戻せません。",[{label:"キャンセル"},{label:"削除",style:"red",fn:()=>deletePost(pid)}]);
       if(v==="like"){ p.liked=!p.liked; p.likes+=p.liked?1:-1; updateLike(p); if(SY.on) SY.like(p.id,p.liked); }
